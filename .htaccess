@@ -6,4 +6,10 @@
 
     RewriteRule \.(?:css|js|jpe?g|gif|png)$ - [L]
     RewriteRule ^api/(.*)$ api-router.php?resource=$1 [QSA,L]
+
+</IfModule>
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type"
 </IfModule>
