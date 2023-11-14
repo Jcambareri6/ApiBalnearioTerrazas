@@ -37,6 +37,7 @@ class EstadiaController extends ApiController {
                         case 'id_Cliente':
                             $this->view->response($estadia->id_Cliente, 200);
                             break;
+                          
                         default:
                             $this->view->response(
                                 'La estadia no contiene ' . $params[':subrecurso'] . '.',
@@ -95,6 +96,7 @@ class EstadiaController extends ApiController {
             $idEstacionamiento != null && (!is_numeric($idEstacionamiento) && !ctype_digit($idEstacionamiento)))  {
                 $this->view->response("campos incompletos o incorrectos", 404);
             } else {
+            
                 $this->modelEstadia->UpdateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente,$id);
                 $this->view->response('La tarea con id='.$id.' ha sido modificada.', 200);
             }

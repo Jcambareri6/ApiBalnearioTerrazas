@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-11-2023 a las 19:57:39
+-- Tiempo de generación: 14-11-2023 a las 20:11:34
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -31,6 +31,7 @@ CREATE TABLE `clientes` (
   `id_Cliente` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `apellido` varchar(45) NOT NULL,
+  `dni` varchar(100) NOT NULL,
   `telefono` varchar(45) NOT NULL,
   `localidad` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
@@ -42,9 +43,12 @@ CREATE TABLE `clientes` (
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id_Cliente`, `nombre`, `apellido`, `telefono`, `localidad`, `email`, `medioDeContacto`, `tipo`) VALUES
-(1, 'joaquin', 'cambareri', '2262507023', 'necochea', 'joauqincambareri@', 'telefno', 'sombrilla'),
-(2, 'franco', 'ruaben', '2262507123', 'tandil', 'franco@', '2272333', 'carpa');
+INSERT INTO `clientes` (`id_Cliente`, `nombre`, `apellido`, `dni`, `telefono`, `localidad`, `email`, `medioDeContacto`, `tipo`) VALUES
+(1, 'joaquin', 'cambareri', '', '2262507023', 'necochea', 'joauqincambareri@', 'telefno', 'sombrilla'),
+(2, 'franco', 'ruaben', '', '2262507123', 'tandil', 'franco@', '2272333', 'carpa'),
+(4, 'RUSO', 'ANGLADETTE', '', '2262489833', 'Pringles', 'ruso02@gmail', 'email', 'carpa'),
+(5, 'abril', 'Cambareri', '', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla'),
+(6, 'abril', 'Cambareri', '', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla');
 
 -- --------------------------------------------------------
 
@@ -102,7 +106,20 @@ INSERT INTO `estadia` (`Id_estadia`, `id_unidad`, `idEstacionamiento`, `fechaIni
 (13, NULL, NULL, '2002-12-28', '2003-02-12', 0, 0, 1),
 (14, NULL, NULL, '2002-12-28', '2002-02-19', 0, 0, 2),
 (16, NULL, NULL, '0000-00-00', '0000-00-00', 0, 0, 1),
-(17, NULL, NULL, '2002-12-28', '2002-12-28', 0, 0, 1);
+(17, NULL, NULL, '2002-12-28', '2002-12-28', 0, 0, 1),
+(31, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
+(34, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
+(35, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
+(37, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
+(38, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
+(42, NULL, NULL, '2023-08-22', '2023-08-23', 0, 0, 1),
+(43, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
+(44, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
+(46, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
+(47, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
+(48, 1, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
+(50, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
+(52, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -156,6 +173,13 @@ CREATE TABLE `unidadsombra` (
   `numero` int(11) NOT NULL,
   `libre` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `unidadsombra`
+--
+
+INSERT INTO `unidadsombra` (`id_unidad`, `tipo`, `numero`, `libre`) VALUES
+(1, 'SOMB', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -246,7 +270,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `detallefactura`
@@ -264,7 +288,7 @@ ALTER TABLE `estacionamiento`
 -- AUTO_INCREMENT de la tabla `estadia`
 --
 ALTER TABLE `estadia`
-  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
@@ -288,7 +312,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `unidadsombra`
 --
 ALTER TABLE `unidadsombra`
-  MODIFY `id_unidad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_unidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
