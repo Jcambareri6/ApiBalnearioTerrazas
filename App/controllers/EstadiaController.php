@@ -11,74 +11,97 @@ class EstadiaController extends ApiController {
         $this->modelEstadia= new modelEstadia();
        
     }
-    public function getEstadias($params=null) {
-        if (empty($params)){
+    public function getEstadias($params = null) {
+        if (empty($params)) {
             $estadias = $this->modelEstadia->getEstadiasWithClientNames();
-                $this->view->response($estadias);
+            $this->view->response($estadias);
         } else {
             // var_dump($params[':ID']);
             // echo(__FILE__);
             $estadia = $this->modelEstadia->getEstadia($params[':ID']);
-            if(!empty($estadia)) {
-                if(!empty($params[':subrecurso'])) {
+            if (!empty($estadia)) {
+                if (!empty($params[':subrecurso'])) {
                     switch ($params[':subrecurso']) {
                         case 'id_unidad':
                             $this->view->response($estadia->id_unidad, 200);
-                        break;
+                            break;
                         case 'idEstacionamiento':
                             $this->view->response($estadia->idEstacionamiento, 200);
-                            break; 
-                         case 'fechaInicio':
+                            break;
+                        case 'fechaInicio':
                             $this->view->response($estadia->fechaInicio, 200);
-                         break; 
-                         case 'FechaFin':
+                            break;
+                        case 'FechaFin':
                             $this->view->response($estadia->FechaFin, 200);
-                         break; 
-                         case 'id_Cliente':
+                            break;
+                        case 'id_Cliente':
                             $this->view->response($estadia->id_Cliente, 200);
-                         break; 
+                            break;
                         default:
-                        $this->view->response(
-                            'La estadia no contiene '.$params[':subrecurso'].'.', 404);
-                        break;
+                            $this->view->response(
+                                'La estadia no contiene ' . $params[':subrecurso'] . '.',
+                                404
+                            );
+                            break;
                     }
-             
-            }else{
-                $this->view->response($estadia);
+                } else {
+                    $this->view->response($estadia);
+                }
+            } else {
+                return $this->view->response("la estadia con el id no existe", 404);
             }
-             
         }
     }
-}
-function  InsertEstadia(){
-    $body= $this->getData();
-    $idUnidad= $body->id_unidad;
-   // $idEstacionamiento= $body->idEstacionamiento;
-    $fechaInicio= $body->fechaInicio;
-    $FechaFin= $body->FechaFin;
-    $id_Cliente= $body->id_Cliente;
-        if (empty($idUnidad) ||empty($fechaInicio) 
-        || empty($FechaFin) || empty($id_Cliente)) {
-        
-            $this->view->response("campos incompletos",404);
+    function  InsertEstadia(){
+        $body = $this->getData();
+        $idUnidad = $body->id_unidad;
+        $idEstacionamiento = $body->idEstacionamiento;
+        $fechaInicio = $body->fechaInicio;
+        $FechaFin = $body->FechaFin;
+        $id_Cliente = $body->id_Cliente;
+        if ( $idUnidad != null && (!is_numeric($idUnidad) && !ctype_digit($idUnidad))
+        ||empty($fechaInicio) || empty($FechaFin) || empty($id_Cliente)||
+        $idEstacionamiento != null && (!is_numeric($idEstacionamiento) && !ctype_digit($idEstacionamiento)))  {
+            $this->view->response("campos incompletos o incorrectos", 404);
+        } else {
+            $lastInsertID = $this->modelEstadia->InsertEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente);
 
-        }else{
-            $lastInsertID= $this->modelEstadia->InsertEstadia($idUnidad,$fechaInicio,$FechaFin,$id_Cliente);
-            
             $estadia = $this->modelEstadia->getEstadia($lastInsertID);
-                $this->view->response($estadia, 201);
-
+            $this->view->response($estadia, 201);
         }
- }
- function delete($params=null){
-    $id=$params[':ID'];
-    $this->modelEstadia->deleteEstadia($id);
-    $estadia = $this->modelEstadia->getEstadia($id);
-    if(empty($estadia)){
-        return $this->view->response("eliminado");
     }
-        return $this->view->response("error",404);
-    
-    
- }
+    function delete($params = null)
+    {
+        $id = $params[':ID'];
+        $this->modelEstadia->deleteEstadia($id);
+        $estadia = $this->modelEstadia->getEstadia($id);
+        if (empty($estadia)) {
+            return $this->view->response("eliminado");
+        }
+        return $this->view->response("error", 404);
+    }
+    function UpdateEstadia($params=null){
+        $id= $params[':ID'];
+        $estadia = $this->modelEstadia->getEstadia($id);
+        if($estadia){
+            $body = $this->getData();
+            $idUnidad = $body->id_unidad;
+            $idEstacionamiento = $body->idEstacionamiento;
+            $fechaInicio = $body->fechaInicio;
+            $FechaFin = $body->FechaFin;
+            $id_Cliente = $body->id_Cliente;
+            if ( $idUnidad != null && (!is_numeric($idUnidad) && !ctype_digit($idUnidad))
+            ||empty($fechaInicio) || empty($FechaFin) || empty($id_Cliente)||
+            $idEstacionamiento != null && (!is_numeric($idEstacionamiento) && !ctype_digit($idEstacionamiento)))  {
+                $this->view->response("campos incompletos o incorrectos", 404);
+            } else {
+                $this->modelEstadia->UpdateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente,$id);
+                $this->view->response('La tarea con id='.$id.' ha sido modificada.', 200);
+            }
+        }else{
+            $this->view->response('La tarea con id='.$id.' no existe.', 404); 
+        }
+       
+        
+    }
 }
