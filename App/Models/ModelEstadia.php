@@ -42,9 +42,9 @@ class modelEstadia extends DB{
         $query = $this->connect()->prepare('DELETE FROM estadia WHERE id_estadia = ?');
         $query->execute([$id]);
     }
-    function updateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente,$id){
-        $query= $this->connect()->prepare('UPDATE estadia SET id_unidad=?,idEstacionamiento=?,fechaInicio=?,FechaFin=?,id_Cliente=? WHERE Id_estadia = ?');
-        $query->execute([$idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente,$id]);
+    function updateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo,$id_Cliente,$id){
+        $query= $this->connect()->prepare('UPDATE estadia SET id_unidad=?,idEstacionamiento=?,fechaInicio=?,FechaFin=?,en_curso=?,finalizo=?,id_Cliente=? WHERE Id_estadia = ?');
+        $query->execute([$idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo, $id_Cliente,$id]);
     }   
     
 

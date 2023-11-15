@@ -2,6 +2,7 @@
 require_once './libs/Router.php';
 require_once './app/controllers/estadiaController.php';
 require_once './App/controllers/ClientesController.php';
+require_once './App/controllers/EstacionamientoController.php';
 
 // crea el router
 $router = new Router();
@@ -20,7 +21,9 @@ $router->addRoute('Estadias/:ID/:subrecurso', 'GET',    'EstadiaController', 'ge
  $router->addRoute('Clientes/', 'POST', 'ClientesController', 'GuardarCliente');
  $router->addRoute('Clientes/:ID', 'PUT', 'ClientesController', 'UpdateCliente');
  $router->addRoute('Clientes/:ID', 'DELETE', 'ClientesController', 'deleteCliente');
-
-
+// endpoint Estacionamiento 
+$router->addRoute('Estacionamiento', 'GET', 'estacionamientoController','getAll');
+$router->addRoute('Estacionamiento/:ID', 'GET', 'estacionamientoController','getAll');
+$router->addRoute('Estacionamiento', 'POST', 'estacionamientoController','GuardarEstacionamiento');
 // ejecuta la ruta (sea cual sea)
 $router->route($_GET["resource"],$_SERVER['REQUEST_METHOD']);
