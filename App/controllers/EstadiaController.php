@@ -83,38 +83,34 @@ class EstadiaController extends ApiController {
         }
         return $this->view->response("error", 404);
     }
-    function UpdateEstadia($params=null){
-        $id= $params[':ID'];
+    function UpdateEstadia($params = null)
+    {
+        $id = $params[':ID'];
         $estadia = $this->modelEstadia->getEstadia($id);
-        if($estadia){
+        if ($estadia) {
             $body = $this->getData();
             $idUnidad = $body->id_unidad;
             $idEstacionamiento = $body->idEstacionamiento;
             $fechaInicio = $body->fechaInicio;
             $FechaFin = $body->FechaFin;
-            $enCurso=$body->en_curso;
-            $finalizo=$body->finalizo;
+            $enCurso = $body->en_curso;
+            $finalizo = $body->finalizo;
             $id_Cliente = $body->id_Cliente;
-            if ( $idUnidad != null && (!is_numeric($idUnidad) && !ctype_digit($idUnidad))
-            ||empty($fechaInicio) || empty($FechaFin) || empty($id_Cliente)|| empty($enCurso) || empty ($finalizo)||
-             $idEstacionamiento != null && (!is_numeric($idEstacionamiento) && !ctype_digit($idEstacionamiento))){
-            //     //empty($fechaInicio) ||
-            //     //empty($FechaFin) ||
-            //    // empty($id_Cliente) ||
-            //     //empty($enCurso) 
-            //     // ($idEstacionamiento !== null && (!is_numeric($idEstacionamiento) || !ctype_digit($idEstacionamiento)))
-              
-           // var_dump($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo,$id_Cliente,$id);
-                // die(__FILE__);
-             $this->view->response("campos incompletos o incorrectos", 404);
-             } else {
-            
-                $this->modelEstadia->UpdateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo,$id_Cliente,$id);
-                $this->view->response('La tarea con id='.$id.' ha sido modificada.', 200);
-             }  
-         }else{
-            $this->view->response('La tarea con id='.$id.' no existe.', 404); 
-         }
+            if 
+                ($idUnidad != null && (!is_numeric($idUnidad) && !ctype_digit($idUnidad)) ||
+                 empty($fechaInicio) || empty($FechaFin) || empty($id_Cliente) ||(!isset($enCurso) && $enCurso !== 0) ||(!isset($finalizo) && $finalizo !== 0)|| 
+                $idEstacionamiento != null && (!is_numeric($idEstacionamiento) && !ctype_digit($idEstacionamiento)
+                )
+            ) {
+                $this->view->response("campos incompletos o incorrectos", 404);
+            } else {
+
+                $this->modelEstadia->UpdateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $enCurso, $finalizo, $id_Cliente, $id);
+                $this->view->response('La tarea con id=' . $id . ' ha sido modificada.', 200);
+            }
+        } else {
+            $this->view->response('La tarea con id=' . $id . ' no existe.', 404);
+        }
        
         
     }
