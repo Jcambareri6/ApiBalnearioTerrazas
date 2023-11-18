@@ -23,6 +23,7 @@ $router->addRoute('Estadias/:ID/:subrecurso', 'GET',    'EstadiaController', 'ge
  $router->addRoute('Clientes/:ID', 'DELETE', 'ClientesController', 'deleteCliente');
 // endpoint Estacionamiento 
 $router->addRoute('Estacionamiento', 'GET', 'estacionamientoController','getAll');
+$router->addRoute('Estacionamiento/:FECHAI/:FECHAF', 'GET', 'estacionamientoController','getAll');
 $router->addRoute('Estacionamiento/:ID', 'GET', 'estacionamientoController','getAll');
 $router->addRoute('Estacionamiento', 'POST', 'estacionamientoController','GuardarEstacionamiento');
 // ejecuta la ruta (sea cual sea)

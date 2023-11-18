@@ -4,8 +4,6 @@ require_once 'app/controllers/ApiController.php';
 
 class EstadiaController extends ApiController {
     private $modelEstadia;
- 
-
     public function __construct(){
         parent::__construct();
         $this->modelEstadia= new modelEstadia();
@@ -43,7 +41,7 @@ class EstadiaController extends ApiController {
                                 'La estadia no contiene ' . $params[':subrecurso'] . '.',
                                 404
                             );
-                            break;
+                           break;
                     }
                 } else {
                     $this->view->response($estadia);

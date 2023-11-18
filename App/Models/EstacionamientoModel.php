@@ -18,6 +18,7 @@ class EstacionamientoModel extends DB{
         $Estacionamiento = $query->fetchAll(PDO::FETCH_OBJ);
         return $Estacionamiento;
     }
+
     public function insertEstacionamiento($numero,$libre){
         $query = $this->connect()->prepare('INSERT INTO estacionamiento (numero, libre) VALUES (?,?)');
         if( $query->execute([$numero,$libre])){
@@ -25,6 +26,18 @@ class EstacionamientoModel extends DB{
         }
        
      }
+     public function buscarEstacionamiento($fechaInicio, $fechaFin){
+        
+        $query = $this->connect()->prepare('SELECT  e.*
+        FROM estacionamiento e
+        JOIN estadia es ON e.id_estacionamiento = es.idEstacionamiento
+        WHERE e.libre = ?
+        AND es.fechaInicio <= ?;  
+        AND es.FechaFin >= ?');
+        $query->execute([ '0',$fechaInicio, $fechaFin]);
+        $estacionamientosLibres= $query->fetchAll(PDO::FETCH_OBJ);
+        return $estacionamientosLibres;
+    }
 
 
 }
