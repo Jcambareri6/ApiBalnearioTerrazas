@@ -45,7 +45,17 @@ class modelEstadia extends DB{
     function updateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo,$id_Cliente,$id){
         $query= $this->connect()->prepare('UPDATE estadia SET id_unidad=?,idEstacionamiento=?,fechaInicio=?,FechaFin=?,en_curso=?,finalizo=?,id_Cliente=? WHERE Id_estadia = ?');
         $query->execute([$idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo, $id_Cliente,$id]);
-    }   
+    } 
+    public function getEstanciasVencidas($diaActual)
+{
+    $sql =  $this->connect()->prepare('SELECT * FROM estadia WHERE FechaFin < ?');
+    $sql->execute([$diaActual]);
+   
+    $estanciasVencidas = $sql->fetchAll(PDO::FETCH_OBJ);
+
+    return $estanciasVencidas;
+}
+  
     
 
     

@@ -7,12 +7,31 @@ class EstadiaController extends ApiController {
     public function __construct(){
         parent::__construct();
         $this->modelEstadia= new modelEstadia();
+         
        
     }
+
+    public function verificarEstadias(){
+ 
+        $fechaActual = date('Y-m-d');
+
+            $estanciasVencidas = $this->modelEstadia->getEstanciasVencidas($fechaActual);
+              
+            foreach ($estanciasVencidas as $estadia) {
+                if(!empty($estadia)){
+                    $this->modelEstadia->deleteEstadia($estadia->Id_estadia);
+                }
+              
+            }
+
+    }
     public function getEstadias($params = null) {
+        $this->verificarEstadias();
         if (empty($params)) {
+
             $estadias = $this->modelEstadia->getEstadiasWithClientNames();
             $this->view->response($estadias);
+
         } else {
             // var_dump($params[':ID']);
             // echo(__FILE__);
@@ -49,7 +68,9 @@ class EstadiaController extends ApiController {
             } else {
                 return $this->view->response("la estadia con el id no existe", 404);
             }
+
         }
+       
     }
     function  InsertEstadia(){
         $body = $this->getData();
