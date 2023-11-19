@@ -1,30 +1,12 @@
 <?php
+require_once './config.php';
 class DB{
-    private $host;
     private $db;
-    private $user;
-    private $password;
-    private $charset;
-
-    public function __construct(){
-        $this->host     = 'localhost';
-        $this->db       = 'balneario';
-        $this->user     = 'root';
-        $this->charset  = 'utf8mb4';
+      public function __construct(){
+        $this->db= new PDO("mysql:host=". DB_HOST . ";dbname=". DB_NAME .";charset=" .DB_Charset,DB_USER, DB_PASS );
+     
     }
-
-    function connect(){
-    
-        try{
-            
-            $connection = "mysql:host=" . $this->host . ";dbname=" . $this->db . ";charset=" . $this->charset;
-            
-            $pdo = new PDO($connection, $this->user, $this->password);
-    
-            return $pdo;
-
-        }catch(PDOException $e){
-            print_r('Error connection: ' . $e->getMessage());
-        }   
+    public  function connect(){
+      return $this->db;
     }
 }

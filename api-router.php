@@ -4,6 +4,7 @@ require_once './app/controllers/estadiaController.php';
 require_once './App/controllers/ClientesController.php';
 require_once './App/controllers/EstacionamientoController.php';
 require_once './App/controllers/UnidadSombracontroller.php';
+require_once './App/controllers/UserController.php';
 
 // crea el router
 $router = new Router();
@@ -32,5 +33,7 @@ $router->addRoute('unidadSombra', 'GET', 'unidadSombraController','getUnidades')
 $router->addRoute('unidadSombra/:ID', 'GET', 'unidadSombraController','getUnidades');
 $router->addRoute('unidadSombra/:FECHAI/:FECHAF', 'GET', 'unidadSombraController','getUnidades');
 $router->addRoute('unidadSombra', 'POST', 'unidadSombraController','GuardarUnidadSombra');
+// usuario
+$router->addRoute('user/token', 'GET',    'UserApiController', 'getToken'   );
 // ejecuta la ruta (sea cual sea)
 $router->route($_GET["resource"],$_SERVER['REQUEST_METHOD']);

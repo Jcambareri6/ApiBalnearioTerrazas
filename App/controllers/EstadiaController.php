@@ -1,12 +1,16 @@
 <?php
 require_once './App/Models/ModelEstadia.php';
 require_once 'app/controllers/ApiController.php';
+require_once './App/helpers/authHelper.php';
 
 class EstadiaController extends ApiController {
     private $modelEstadia;
+    private $authHelper;
     public function __construct(){
         parent::__construct();
         $this->modelEstadia= new modelEstadia();
+        $this->authHelper = new AuthHelper ();
+
          
        
     }
@@ -26,6 +30,12 @@ class EstadiaController extends ApiController {
 
     }
     public function getEstadias($params = null) {
+        $user=$this->authHelper->currentUser();
+        if(!$user){
+            $this->view->response("unauthorized",401);
+            die();
+        }
+        
         $this->verificarEstadias();
         if (empty($params)) {
 
