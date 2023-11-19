@@ -11,11 +11,11 @@ abstract class ApiController {
         $this->data = file_get_contents('php://input');   
          $this->AuthHelper = new AuthHelper ();
 
-        $user=$this->AuthHelper->currentUser();
-        if(!$user){
-            $this->view->response("unauthorized",401);
-            die();
-        }
+        // $user=$this->AuthHelper->currentUser();
+        // if(!$user){
+        //     $this->view->response("unauthorized",401);
+        //     die();
+        // }
     }
 
     function getData() {
