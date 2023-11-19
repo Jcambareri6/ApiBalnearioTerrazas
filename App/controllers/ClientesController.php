@@ -14,11 +14,7 @@ class ClientesController extends ApiController{
   }
     public function GetClientes($params = null)
     {
-        $user=$this->authelper->currentUser();
-        if(!$user){
-            $this->view->response("unauthorized",401);
-            die();
-        }
+        
         if (empty($params)) {
             $Clientes = $this->Model->getclientes();
             $this->view->response($Clientes);
