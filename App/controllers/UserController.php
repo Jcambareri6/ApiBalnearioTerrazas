@@ -16,7 +16,7 @@
 
         function getToken($params = []) {
             $basic = $this->authHelper->getAuthHeaders(); // Darnos el header 'Authorization:' 'Basic: base64(usr:pass)'
-            
+           
             if(empty($basic)) {
                 //
                 $this->view->response('No envió encabezados de autenticación.', 401);
@@ -40,7 +40,6 @@
         
             if ( $user==$userdata->username && password_verify($pass,$userdata->password)) {
                 // Usuario es válido
-                
                 $token = $this->authHelper->createToken($userdata);
                 $this->view->response($token);
             } else {

@@ -15,6 +15,7 @@ class AuthHelper {
             $header = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
         
         return $header;
+
     }
 
     function createToken($payload) {
