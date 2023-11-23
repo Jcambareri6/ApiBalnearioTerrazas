@@ -40,18 +40,20 @@ class AuthHelper {
 
     function verify($token) {
         // $header.$payload.$signature
-
+        $token = str_replace('"', '', $token);
         $token = explode(".", $token); // [$header, $payload, $signature]
         $header = $token[0];
         $payload = $token[1];
         $signature = $token[2];
        
 
-        $new_signature = hash_hmac('SHA256', "$header.$payload", JWT_KEY, true);
+        $new_signature = hash_hmac('SHA256', $header . '.' . $payload, JWT_KEY, true);
+
         $new_signature = base64url_encode($new_signature);
-        // var_dump($new_signature);
-        // die(__FILE__);
+    
         if($signature!=$new_signature) {
+            var_dump("retorne false");
+            die(__FILE__);
             return false;
         }
 
@@ -66,7 +68,9 @@ class AuthHelper {
     }
 
     function currentUser() {
-        $auth = $this->getAuthHeaders(); // "Bearer $token"
+        $auth = $this->getAuthHeaders(); 
+        // echo  $auth;
+        // die(__FILE__);// "Bearer $token"
         $auth = explode(" ", $auth); // ["Bearer", "$token"]
 
         if($auth[0] != "Bearer") {

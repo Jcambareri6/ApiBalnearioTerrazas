@@ -37,6 +37,7 @@ $router->addRoute('unidadSombra', 'POST', 'unidadSombraController','GuardarUnida
 // endpoint detalleFactura
 $router->addRoute('detalleFactura', 'GET', 'detalleFacturaController','getdetallesFactura');
 $router->addRoute('detalleFactura/:ID', 'GET', 'detalleFacturaController','getdetallesFactura');
+$router->addRoute('detalleFactura', 'POST', 'detalleFacturaController','GuardarDetalle');
 // usuario
 $router->addRoute('user/token', 'GET',    'UserApiController', 'getToken');
 // ejecuta la ruta (sea cual sea)

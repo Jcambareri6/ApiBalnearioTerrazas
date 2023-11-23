@@ -29,15 +29,17 @@ class detalleFacturaController  extends ApiController {
     }
     public function GuardarDetalle(){
         $body= $this->getData();
-        $id= $body->idFactura;
+        
         $nroPago= $body->NRO_PAGO;
         $total= $body->total;
+        $pago= $body->pago;
         $restan = $body->restan;
         $medioDePago= $body->medioDePago;
-        if( (empty($id) && !is_numeric($id)  && !$this->Model->idExistente($id)) || empty($nroPago)||empty($total) ||empty($restan)||empty($medioDePago)){
+        $idFacturas= $body->id_Facturas;
+        if(empty($nroPago)||empty($total) || empty($pago) ||empty($restan)||empty($medioDePago)|| (empty($idFacturas) || !is_numeric($idFacturas) || $this->Model->idExistente($idFacturas)!=true)){
             $this->view->response("datos incorrectos",404);
         }else{
-            $lastInsertID = $this->Model->InsertDetalleFactura($id, $nroPago, $total, $restan,$medioDePago);
+            $lastInsertID = $this->Model->InsertDetalleFactura($nroPago, $total,$pago ,$restan,$medioDePago,$idFacturas);
 
             $estadia = $this->Model->getDetalleFactura($lastInsertID);
             $this->view->response($estadia, 201);
