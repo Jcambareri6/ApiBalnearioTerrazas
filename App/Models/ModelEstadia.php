@@ -7,9 +7,9 @@ class modelEstadia extends DB{
         
             $sql = $this->connect()->prepare( 'SELECT estadia.*, clientes.nombre
             FROM estadia 
-            INNER JOIN clientes ON estadia.id_Cliente = clientes.id_Cliente'); // Aquí se debe indicar la columna de clientes que se relaciona con estadia
+            INNER JOIN clientes ON estadia.id_Cliente = clientes.id_Cliente  '); // Aquí se debe indicar la columna de clientes que se relaciona con estadia
     
-            $sql->execute();
+            $sql->execute([]);
     
             $result = $sql->fetchAll(PDO::FETCH_OBJ);
     
@@ -42,12 +42,12 @@ class modelEstadia extends DB{
         $query = $this->connect()->prepare('DELETE FROM estadia WHERE id_estadia = ?');
         $query->execute([$id]);
     }
+   
     function updateEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo,$id_Cliente,$id){
         $query= $this->connect()->prepare('UPDATE estadia SET id_unidad=?,idEstacionamiento=?,fechaInicio=?,FechaFin=?,en_curso=?,finalizo=?,id_Cliente=? WHERE Id_estadia = ?');
         $query->execute([$idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin,$enCurso,$finalizo, $id_Cliente,$id]);
     } 
-    public function getEstanciasVencidas($diaActual)
-{
+     function getEstadiasVencidas($diaActual){
     $sql =  $this->connect()->prepare('SELECT * FROM estadia WHERE FechaFin < ?');
     $sql->execute([$diaActual]);
    

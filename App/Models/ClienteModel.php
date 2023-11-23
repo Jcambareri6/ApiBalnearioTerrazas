@@ -2,6 +2,7 @@
 
 class clienteModel extends DB{
     public function getclientes(){
+       
         $query= $this->connect()->prepare('SELECT * FROM clientes');
         $query->execute();
         $Clientes= $query->fetchAll(PDO::FETCH_OBJ);

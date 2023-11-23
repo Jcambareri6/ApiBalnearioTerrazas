@@ -5,34 +5,31 @@ require_once 'app/controllers/ApiController.php';
 
 class EstadiaController extends ApiController {
     private $modelEstadia;
-    private $authHelper;
+  
     public function __construct(){
         parent::__construct();
-        $this->modelEstadia= new modelEstadia();
-       
-
-         
-       
+        $this->modelEstadia= new modelEstadia(); 
     }
 
     public function verificarEstadias(){
  
         $fechaActual = date('Y-m-d');
 
-            $estanciasVencidas = $this->modelEstadia->getEstanciasVencidas($fechaActual);
-              
+            $estanciasVencidas = $this->modelEstadia->getEstadiasVencidas($fechaActual);
+           
             foreach ($estanciasVencidas as $estadia) {
                 if(!empty($estadia)){
-                    $this->modelEstadia->deleteEstadia($estadia->Id_estadia);
+                    $this->modelEstadia->updateEstadia($estadia->id_unidad,$estadia->idEstacionamiento,$estadia->fechaInicio,$estadia->FechaFin,0,1,$estadia->id_Cliente,$estadia->Id_estadia);
+                    // echo 'modificada';
                 }
-              
+                // var_dump($estanciasVencidas);
+                // die(__FILE__);
             }
-
     }
     public function getEstadias($params = null) {
         
         
-        $this->verificarEstadias();
+       $this->verificarEstadias();
         if (empty($params)) {
 
             $estadias = $this->modelEstadia->getEstadiasWithClientNames();

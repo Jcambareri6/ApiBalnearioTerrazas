@@ -1,16 +1,16 @@
 <?php
-require_once './App/controllers/ApiController.php';
+// require_once './App/controllers/ApiController.php';
 require_once './App/Models/ClienteModel.php';
-require_once './App/helpers/authHelper.php';
+
 
 class ClientesController extends ApiController{
     private $Model;
-    private $authelper;
+  
   public function __construct()
   {
     parent::__construct();
     $this->Model= new clienteModel ();
-    $this->authelper= new AuthHelper();
+   
   }
     public function GetClientes($params = null)
     {
