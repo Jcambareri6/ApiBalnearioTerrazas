@@ -6,6 +6,7 @@ require_once './App/controllers/EstacionamientoController.php';
 require_once './App/controllers/UnidadSombracontroller.php';
 require_once './App/controllers/UserController.php';
 require_once './App/controllers/detalleFacturaController.php';
+require_once './App/controllers/facturasController.php';
 
 // crea el router
 $router = new Router();
@@ -38,6 +39,9 @@ $router->addRoute('unidadSombra', 'POST', 'unidadSombraController','GuardarUnida
 $router->addRoute('detalleFactura', 'GET', 'detalleFacturaController','getdetallesFactura');
 $router->addRoute('detalleFactura/:ID', 'GET', 'detalleFacturaController','getdetallesFactura');
 $router->addRoute('detalleFactura', 'POST', 'detalleFacturaController','GuardarDetalle');
+$router->addRoute('detalleFactura/:ID', 'PUT', 'detalleFacturaController','UpdateDetalleFactura');
+//facturas
+$router->addRoute('facturas', 'GET', 'facturaController','getFacturas');
 // usuario
 $router->addRoute('user/token', 'GET',    'UserApiController', 'getToken');
 // ejecuta la ruta (sea cual sea)

@@ -1,22 +1,25 @@
 <?php 
 require_once './App/Models/DetalleFacturaModel.php';
+require_once './App/Models/facturaModel.php';
 
 
 
 class detalleFacturaController  extends ApiController {
-    private $Model;
+    private $ModelDetalleFactura;
+    private $ModelFacturas;
     public function __construct()
     {
         parent::__construct();
-        $this->Model= new detalleFacturaModel();
+        $this->ModelDetalleFactura= new detalleFacturaModel();
+        $this->ModelFacturas= new facturaModel();
     }
     public function getdetallesFactura($params=null){
         if(empty($params)){
-            $detallesFac= $this->Model->getAll();
+            $detallesFac= $this->ModelDetalleFactura->getAll();
             $this->view->response($detallesFac);
         }else{
             $id= $params[':ID'];
-            $detalleFac= $this->Model->getDetalleFactura($id);
+            $detalleFac= $this->ModelDetalleFactura->getDetalleFactura($id);
             if(!empty($detalleFac)){
                 $this->view->response($detalleFac);
 
@@ -27,22 +30,48 @@ class detalleFacturaController  extends ApiController {
         }
         
     }
-    public function GuardarDetalle(){
-        $body= $this->getData();
-        
-        $nroPago= $body->NRO_PAGO;
-        $total= $body->total;
-        $pago= $body->pago;
-        $restan = $body->restan;
-        $medioDePago= $body->medioDePago;
-        $idFacturas= $body->id_Facturas;
-        if(empty($nroPago)||empty($total) || empty($pago) ||empty($restan)||empty($medioDePago)|| (empty($idFacturas) || !is_numeric($idFacturas) || $this->Model->idExistente($idFacturas)!=true)){
-            $this->view->response("datos incorrectos",404);
-        }else{
-            $lastInsertID = $this->Model->InsertDetalleFactura($nroPago, $total,$pago ,$restan,$medioDePago,$idFacturas);
-
-            $estadia = $this->Model->getDetalleFactura($lastInsertID);
-            $this->view->response($estadia, 201);
+    public function GuardarDetalle() {
+        $body = $this->getData();
+        $nroPago = $body->NRO_PAGO;
+        $pago = $body->pago;
+        $medioDePago = $body->medioDePago;
+        $idFacturas = $body->id_Facturas;
+   
+        if (empty($nroPago) || empty($pago) || empty($medioDePago) || empty($idFacturas) || !is_numeric($idFacturas) ||  ! $this->ModelDetalleFactura->idExistente($idFacturas)){
+            $this->view->response("Datos incorrectos", 400);
+        } else {
+            $montoActual = $this->ModelFacturas->getMontoTotal($idFacturas);
+    
+            if ($montoActual >= $pago) {
+                $restan = $montoActual - $pago;
+    
+                // Validar que el nuevo total no sea negativo
+                if ($restan < 0) {
+                    $this->view->response("Error en el monto", 400);
+                    die();
+                }
+    
+                // Declara la variable $restan antes de utilizarla
+                $lastInsertID = $this->ModelDetalleFactura->InsertDetalleFactura($nroPago, $pago, $restan, $medioDePago, $idFacturas);
+                $detalleFac = $this->ModelDetalleFactura->getDetalleFactura($lastInsertID);
+                $this->ModelFacturas->UpdateFactura($restan, $idFacturas);
+    
+                if ($detalleFac) {
+                    $this->view->response($detalleFac, 201);
+                } else {
+                    $this->view->response("ERROR");
+                }
+            } else {
+                $this->view->response("Error en el monto", 400);
+            }
         }
     }
-}
+    
+    }
+    
+
+    
+
+
+    
+  

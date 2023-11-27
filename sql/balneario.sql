@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2023 a las 20:11:34
--- Versión del servidor: 10.4.25-MariaDB
--- Versión de PHP: 8.1.10
+-- Tiempo de generación: 25-11-2023 a las 21:59:43
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,7 @@ CREATE TABLE `clientes` (
   `email` varchar(45) NOT NULL,
   `medioDeContacto` varchar(45) NOT NULL,
   `tipo` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -48,7 +48,9 @@ INSERT INTO `clientes` (`id_Cliente`, `nombre`, `apellido`, `dni`, `telefono`, `
 (2, 'franco', 'ruaben', '', '2262507123', 'tandil', 'franco@', '2272333', 'carpa'),
 (4, 'RUSO', 'ANGLADETTE', '', '2262489833', 'Pringles', 'ruso02@gmail', 'email', 'carpa'),
 (5, 'abril', 'Cambareri', '', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla'),
-(6, 'abril', 'Cambareri', '', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla');
+(6, 'abril', 'Cambareri', '', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla'),
+(7, 'abril', 'Cambareri', '44046999', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla'),
+(8, 'miguel', 'cabodevila', '5392134', '2262445677', 'Tandil', 'Miguel@gmail', 'Telefono', 'sombrilla');
 
 -- --------------------------------------------------------
 
@@ -57,12 +59,77 @@ INSERT INTO `clientes` (`id_Cliente`, `nombre`, `apellido`, `dni`, `telefono`, `
 --
 
 CREATE TABLE `detallefactura` (
-  `idFactura` int(11) NOT NULL,
+  `id_factura` int(11) NOT NULL,
   `NRO_PAGO` int(11) NOT NULL,
-  `total` int(11) NOT NULL,
+  `pago` int(11) NOT NULL,
   `restan` int(11) NOT NULL,
-  `medioDePago` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `medioDePago` varchar(45) NOT NULL,
+  `id_Facturas` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detallefactura`
+--
+
+INSERT INTO `detallefactura` (`id_factura`, `NRO_PAGO`, `pago`, `restan`, `medioDePago`, `id_Facturas`) VALUES
+(1, 1, 2000, 4, 'EFECTIVO', 4),
+(2, 1, 2000, 4, 'EFECTIVO', 4),
+(3, 1, 2000, 4, 'EFECTIVO', 4),
+(4, 1, 2000, 4, 'EFECTIVO', 5),
+(5, 1, 2000, 4, 'EFECTIVO', 5),
+(6, 1, 2000, 4, 'EFECTIVO', 4),
+(7, 1, 2000, 4, 'EFECTIVO', 4),
+(8, 1, 2000, 4, 'EFECTIVO', 5),
+(9, 1, 2000, 4, 'EFECTIVO', 5),
+(10, 1, 2000, 4, 'EFECTIVO', 5),
+(11, 1, 8000, 4, 'EFECTIVO', 5),
+(12, 1, 2000, 4, 'EFECTIVO', 5),
+(13, 1, 8000, 4, 'EFECTIVO', 5),
+(14, 1, 8000, 4, 'EFECTIVO', 5),
+(15, 1, 2000, 4, 'EFECTIVO', 5),
+(16, 1, 2000, 4, 'EFECTIVO', 5),
+(17, 1, 2000, 4, 'EFECTIVO', 5),
+(18, 1, 2000, 4, 'EFECTIVO', 5),
+(19, 1, 2000, 4, 'EFECTIVO', 5),
+(20, 1, 8000, 4, 'EFECTIVO', 5),
+(21, 1, 8000, 4, 'EFECTIVO', 5),
+(24, 1, 8000, 4, 'EFECTIVO', 5),
+(25, 1, 2000, 4, 'EFECTIVO', 5),
+(26, 1, 2000, 4, 'EFECTIVO', 5),
+(27, 1, 2000, 4, 'EFECTIVO', 5),
+(28, 1, 3000, 4, 'EFECTIVO', 5),
+(29, 1, 3000, 4, 'EFECTIVO', 5),
+(30, 1, 7000, 4, 'EFECTIVO', 5),
+(31, 1, 7000, 4, 'EFECTIVO', 5),
+(32, 1, 3000, 4, 'EFECTIVO', 5),
+(33, 1, 3000, 4, 'EFECTIVO', 5),
+(34, 1, 3000, 4, 'EFECTIVO', 5),
+(35, 1, 3000, 4, 'EFECTIVO', 5),
+(36, 1, 3000, 4, 'EFECTIVO', 5),
+(37, 1, 3000, 4, 'EFECTIVO', 5),
+(38, 1, 4000, 4, 'EFECTIVO', 5),
+(39, 1, 4000, 4, 'EFECTIVO', 5),
+(40, 1, 6000, 4, 'EFECTIVO', 5),
+(41, 1, 6000, 4, 'EFECTIVO', 5),
+(42, 1, 6000, 4, 'EFECTIVO', 5),
+(43, 1, 6000, 4, 'EFECTIVO', 5),
+(44, 1, 4000, 4, 'EFECTIVO', 5),
+(45, 1, 4000, 4, 'EFECTIVO', 5),
+(46, 1, 6000, 4, 'EFECTIVO', 5),
+(47, 1, 4000, 4, 'EFECTIVO', 5),
+(48, 1, 6000, 4, 'EFECTIVO', 5),
+(49, 1, 6000, 4, 'EFECTIVO', 5),
+(50, 1, 6000, 4, 'EFECTIVO', 5),
+(51, 1, 4000, 4, 'EFECTIVO', 5),
+(52, 1, 5000, 4, 'EFECTIVO', 5),
+(53, 1, 5000, 4, 'EFECTIVO', 5),
+(54, 1, 5000, 4, 'EFECTIVO', 5),
+(55, 1, 5000, 4, 'EFECTIVO', 5),
+(56, 1, 5000, 4, 'EFECTIVO', 5),
+(57, 1, 5000, 4, 'EFECTIVO', 5),
+(58, 1, 5000, 4, 'EFECTIVO', 5),
+(59, 1, 5000, 4, 'EFECTIVO', 5),
+(60, 1, 5000, 4, 'EFECTIVO', 5);
 
 -- --------------------------------------------------------
 
@@ -73,8 +140,22 @@ CREATE TABLE `detallefactura` (
 CREATE TABLE `estacionamiento` (
   `id_estacionamiento` int(11) NOT NULL,
   `numero` int(11) NOT NULL,
-  `libre` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `libre` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estacionamiento`
+--
+
+INSERT INTO `estacionamiento` (`id_estacionamiento`, `numero`, `libre`) VALUES
+(1, 1, 0),
+(2, 2, 0),
+(3, 1, 1),
+(4, 1, 0),
+(5, 1, 0),
+(6, 1, 1),
+(7, 1, 0),
+(8, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -91,35 +172,18 @@ CREATE TABLE `estadia` (
   `en_curso` tinyint(1) DEFAULT 0,
   `finalizo` tinyint(1) DEFAULT 0,
   `id_Cliente` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `estadia`
 --
 
 INSERT INTO `estadia` (`Id_estadia`, `id_unidad`, `idEstacionamiento`, `fechaInicio`, `FechaFin`, `en_curso`, `finalizo`, `id_Cliente`) VALUES
-(2, NULL, NULL, '2023-09-20', '2023-09-22', 0, 0, 2),
-(8, NULL, NULL, '2002-12-28', '2002-12-28', 0, 0, 1),
-(10, NULL, NULL, '2002-12-28', '2002-12-28', 0, 0, 1),
 (11, NULL, NULL, '0022-01-12', '4221-03-12', 0, 0, 1),
-(12, NULL, NULL, '0022-01-12', '4221-03-12', 0, 0, 1),
-(13, NULL, NULL, '2002-12-28', '2003-02-12', 0, 0, 1),
-(14, NULL, NULL, '2002-12-28', '2002-02-19', 0, 0, 2),
-(16, NULL, NULL, '0000-00-00', '0000-00-00', 0, 0, 1),
-(17, NULL, NULL, '2002-12-28', '2002-12-28', 0, 0, 1),
-(31, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
-(34, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
-(35, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
-(37, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
-(38, 1, NULL, '0002-11-29', '0000-00-00', 0, 0, 1),
-(42, NULL, NULL, '2023-08-22', '2023-08-23', 0, 0, 1),
-(43, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
-(44, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
-(46, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
-(47, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
-(48, 1, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
-(50, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 1),
-(52, NULL, NULL, '2023-08-22', '2023-08-23', 1, 0, 2);
+(55, 4, 3, '2023-11-18', '0000-00-00', 0, 1, 6),
+(58, 9, 3, '2023-11-22', '2023-11-22', 0, 1, 1),
+(59, 8, NULL, '2023-11-08', '2023-09-09', 0, 1, 6),
+(60, 2, 5, '2023-11-08', '2023-11-09', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -128,11 +192,19 @@ INSERT INTO `estadia` (`Id_estadia`, `id_unidad`, `idEstacionamiento`, `fechaIni
 --
 
 CREATE TABLE `facturas` (
-  `id_factura` int(11) NOT NULL,
+  `idFacturas` int(11) NOT NULL,
   `idEstadia` int(11) NOT NULL,
   `total` float NOT NULL,
   `precioXdia` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `facturas`
+--
+
+INSERT INTO `facturas` (`idFacturas`, `idEstadia`, `total`, `precioXdia`) VALUES
+(4, 55, 10000, 2000),
+(5, 60, 5000, 2000);
 
 -- --------------------------------------------------------
 
@@ -144,22 +216,7 @@ CREATE TABLE `integrantes` (
   `id_Cliente` int(11) NOT NULL,
   `nombre` int(11) NOT NULL,
   `apellido` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `productos`
---
-
-CREATE TABLE `productos` (
-  `ProductoID` int(11) NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
-  `Descripcion` text NOT NULL,
-  `Precio` double NOT NULL,
-  `Stock` int(11) NOT NULL,
-  `Condicion` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -172,14 +229,25 @@ CREATE TABLE `unidadsombra` (
   `tipo` varchar(15) NOT NULL,
   `numero` int(11) NOT NULL,
   `libre` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `unidadsombra`
 --
 
 INSERT INTO `unidadsombra` (`id_unidad`, `tipo`, `numero`, `libre`) VALUES
-(1, 'SOMB', 0, 0);
+(1, 'SOMB', 0, 1),
+(2, 'carpa', 2, 0),
+(3, 'sombrilla', 3, 0),
+(4, 'carpa', 4, 0),
+(5, 'carpa', 5, 1),
+(6, 'carpa', 5, 1),
+(7, 'carpa', 5, 1),
+(8, 'carpa', 5, 1),
+(9, 'carpa', 1, 0),
+(10, 'sombrilla', 5, 1),
+(11, 'sombrilla', 5, 1),
+(12, 'sombrilla', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -191,14 +259,14 @@ CREATE TABLE `usuarios` (
   `id_User` int(11) NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_User`, `username`, `password`) VALUES
-(2, 'jcambareri6', '$2y$10$NV5nQMbwTb450liyemG.9.UOrHokjDl3Igaqk5yzOvUvXNNgdRO4e');
+(2, 'jcambareri6', '$2y$10$hYzDk8cL0MzBb6xZ0SpKwuRs1oHnOsa4LUVSPgPWsGceX8IZtrNkW');
 
 --
 -- Índices para tablas volcadas
@@ -214,7 +282,8 @@ ALTER TABLE `clientes`
 -- Indices de la tabla `detallefactura`
 --
 ALTER TABLE `detallefactura`
-  ADD PRIMARY KEY (`idFactura`);
+  ADD PRIMARY KEY (`id_factura`),
+  ADD KEY `idFacturaFK` (`id_Facturas`);
 
 --
 -- Indices de la tabla `estacionamiento`
@@ -235,7 +304,7 @@ ALTER TABLE `estadia`
 -- Indices de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  ADD PRIMARY KEY (`id_factura`),
+  ADD PRIMARY KEY (`idFacturas`),
   ADD KEY `fk_idEstadia` (`idEstadia`);
 
 --
@@ -243,12 +312,6 @@ ALTER TABLE `facturas`
 --
 ALTER TABLE `integrantes`
   ADD PRIMARY KEY (`id_Cliente`);
-
---
--- Indices de la tabla `productos`
---
-ALTER TABLE `productos`
-  ADD PRIMARY KEY (`ProductoID`);
 
 --
 -- Indices de la tabla `unidadsombra`
@@ -270,31 +333,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `detallefactura`
 --
 ALTER TABLE `detallefactura`
-  MODIFY `idFactura` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `estacionamiento`
 --
 ALTER TABLE `estacionamiento`
-  MODIFY `id_estacionamiento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_estacionamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `estadia`
 --
 ALTER TABLE `estadia`
-  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFacturas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `integrantes`
@@ -303,16 +366,10 @@ ALTER TABLE `integrantes`
   MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `productos`
---
-ALTER TABLE `productos`
-  MODIFY `ProductoID` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `unidadsombra`
 --
 ALTER TABLE `unidadsombra`
-  MODIFY `id_unidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_unidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -328,7 +385,7 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `detallefactura`
 --
 ALTER TABLE `detallefactura`
-  ADD CONSTRAINT `fk_IdFactura_estadia` FOREIGN KEY (`idFactura`) REFERENCES `facturas` (`id_factura`);
+  ADD CONSTRAINT `idFacturaFK` FOREIGN KEY (`id_Facturas`) REFERENCES `facturas` (`idFacturas`);
 
 --
 -- Filtros para la tabla `estadia`
