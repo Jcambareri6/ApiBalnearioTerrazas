@@ -7,10 +7,20 @@ class facturaController extends ApiController{
         parent::__construct();
         $this->model= new facturaModel();
     }
-    public function getFacturas(){
-        $facturas =$this->model->getFacturasModel();
-      
-         $this->view->response($facturas);
+    public function getFacturas($params=NULL){
+        if(empty($params)){
+            $detallesFac= $this->model->getFacturasModel();
+            $this->view->response("FACTURAS".$detallesFac,200);
+        }else{
+            $id= $params[':ID'];
+            $Factura= $this->model->getFactura($id);
+            if(!empty($Factura)){
+                $this->view->response($Factura);
+            }else{
+                $this->view->response("el detalle de factura con el id ".$id." no existe");
+            }
+
+        }
     }
     
 

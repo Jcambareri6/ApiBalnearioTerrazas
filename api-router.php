@@ -42,6 +42,7 @@ $router->addRoute('detalleFactura', 'POST', 'detalleFacturaController','GuardarD
 $router->addRoute('detalleFactura/:ID', 'PUT', 'detalleFacturaController','UpdateDetalleFactura');
 //facturas
 $router->addRoute('facturas', 'GET', 'facturaController','getFacturas');
+$router->addRoute('facturas/:ID', 'GET', 'facturaController','getFacturas');
 // usuario
 $router->addRoute('user/token', 'GET',    'UserApiController', 'getToken');
 // ejecuta la ruta (sea cual sea)
