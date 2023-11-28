@@ -10,7 +10,7 @@ class facturaController extends ApiController{
     public function getFacturas($params=NULL){
         if(empty($params)){
             $detallesFac= $this->model->getFacturasModel();
-            $this->view->response("FACTURAS".$detallesFac,200);
+            $this->view->response($detallesFac,200);
         }else{
             $id= $params[':ID'];
             $Factura= $this->model->getFactura($id);
