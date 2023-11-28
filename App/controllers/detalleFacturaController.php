@@ -1,9 +1,6 @@
 <?php 
 require_once './App/Models/DetalleFacturaModel.php';
 require_once './App/Models/facturaModel.php';
-
-
-
 class detalleFacturaController  extends ApiController {
     private $ModelDetalleFactura;
     private $ModelFacturas;
@@ -51,7 +48,7 @@ class detalleFacturaController  extends ApiController {
                     die();
                 }
     
-                // Declara la variable $restan antes de utilizarla
+          
                 $lastInsertID = $this->ModelDetalleFactura->InsertDetalleFactura($nroPago, $pago, $restan, $medioDePago, $idFacturas);
                 $detalleFac = $this->ModelDetalleFactura->getDetalleFactura($lastInsertID);
                 $this->ModelFacturas->UpdateFactura($restan, $idFacturas);
