@@ -1,10 +1,13 @@
 <?php
 require_once './App/Models/facturaModel.php';
+require_once './App/Models/ModelEstadia.php';
 class facturaController extends ApiController{
+    private $modelEstadia;
     private $model;
     public function __construct()
     {
         parent::__construct();
+        $this->modelEstadia= new modelEstadia();
         $this->model= new facturaModel();
     }
     public function getFacturas($params=NULL){
@@ -20,6 +23,41 @@ class facturaController extends ApiController{
                 $this->view->response("el detalle de factura con el id ".$id." no existe");
             }
 
+        }
+    }
+    public function guardarFactura(){
+        $body=$this->getData();
+        $IdEstadia= $body->idEstadia;
+        $total =  $body->total;
+        $precioXdia= $body->precioXdia;
+        if((empty($IdEstadia)|| !is_numeric($IdEstadia)|| !$this->modelEstadia->IDexistente($IdEstadia)||empty($total) || empty($precioXdia))){
+            $this->view->response("error",404);
+        }else{
+        $id= $this->model->InsertFactura($IdEstadia,$total,$precioXdia);
+         $Factura= $this->model->getFactura($id);
+           if($Factura){
+             $this->view->response($Factura,201);
+           }
+        }
+    }
+    public function UpdateFactura($params=null){
+       
+        $id = $params[':ID'];
+        $factura = $this->model->getFactura($id);
+        if ($factura) {
+            $body = $this->getData();
+            $IdEstadia= $body->idEstadia;
+             $total =  $body->total;
+            $precioXdia= $body->precioXdia;
+            if((empty($IdEstadia)|| !is_numeric($IdEstadia)|| !$this->modelEstadia->IDexistente($IdEstadia)||empty($total) || empty($precioXdia))){
+                $this->view->response("error",404);
+            }else{
+                $this->model->UpdateFactura($IdEstadia,$total,$precioXdia,$id);
+                $this->view->response("se modifico con exito",200);
+            }
+
+        }else{
+            $this->view->response("la estadia con el id :".$id."no existe");
         }
     }
     

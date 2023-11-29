@@ -51,7 +51,7 @@ class detalleFacturaController  extends ApiController {
           
                 $lastInsertID = $this->ModelDetalleFactura->InsertDetalleFactura($nroPago, $pago, $restan, $medioDePago, $idFacturas);
                 $detalleFac = $this->ModelDetalleFactura->getDetalleFactura($lastInsertID);
-                $this->ModelFacturas->UpdateFactura($restan, $idFacturas);
+                $this->ModelFacturas->updateMonto($restan, $idFacturas);
     
                 if ($detalleFac) {
                     $this->view->response($detalleFac, 201);

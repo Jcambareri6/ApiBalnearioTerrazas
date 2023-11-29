@@ -1,18 +1,11 @@
 <?php 
 class facturaModel extends DB {
-   public function UpdateFactura($total,$id){
+   public function UpdateFactura($idEstadia,$total,$precioXdia,$id){
       try {
-       
-       $factura= $this->getFactura($id);
       //  var_dump($factura);
-         $query = $this->connect()->prepare('UPDATE facturas SET total=? WHERE idFacturas=?');
-         $query->execute([$total,$id]);
-    
-      
-        
+         $query = $this->connect()->prepare('UPDATE facturas SET idEstadia=?,total=?, precioXdia=? WHERE idFacturas=?');
+         $query->execute([$idEstadia,$total,$precioXdia,$id]);
          return $query->rowCount();
-
-        
       // o puedes devolver $query->rowCount() para verificar si se realizaron cambios
      } catch (PDOException $e) {
          // Manejar el error de la base de datos
@@ -39,5 +32,19 @@ class facturaModel extends DB {
       $factura= $query->fetch(PDO::FETCH_OBJ);
       return $factura;
 
+   }
+   public function InsertFactura($idEstadia,$total,$precioXdia){
+      $query= $this->connect()->prepare('INSERT INTO facturas (idEstadia, total, precioXdia) VALUES (?,?,?)');
+      if( $query->execute([$idEstadia,$total,$precioXdia])){
+         $lastInsertId = $this->connect()->query('SELECT MAX(idFacturas) FROM facturas')->fetchColumn();
+            return $lastInsertId;
+      }else{
+         return false;
+      }
+   }
+   function updateMonto($total,$id){
+      $query = $this->connect()->prepare('UPDATE facturas SET total=? WHERE idFacturas=?');
+      $query->execute([$total,$id]);
+      return $query->rowCount();
    }
 }

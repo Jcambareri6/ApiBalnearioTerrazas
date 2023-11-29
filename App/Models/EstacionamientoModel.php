@@ -19,9 +19,9 @@ class EstacionamientoModel extends DB{
         return $Estacionamiento;
     }
 
-    public function insertEstacionamiento($numero,$libre){
-        $query = $this->connect()->prepare('INSERT INTO estacionamiento (numero, libre) VALUES (?,?)');
-        if( $query->execute([$numero,$libre])){
+    public function insertEstacionamiento($numero,$libre,$tipo){
+        $query = $this->connect()->prepare('INSERT INTO estacionamiento (numero, libre,tipo) VALUES (?,?,?)');
+        if( $query->execute([$numero,$libre,$tipo])){
            return   $this->connect()->query('SELECT MAX(id_estacionamiento) FROM estacionamiento')->fetchColumn();   
         }
        
