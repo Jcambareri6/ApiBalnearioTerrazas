@@ -2,15 +2,14 @@
 
 ## Descripción General
 
-El backend del Sistema de Administración de Balnearios está desarrollado en PHP puro y utiliza un enrutador personalizado para gestionar las diversas operaciones del sistema. Este componente es esencial para la gestión de estancias, registro de clientes, facturación, administración de espacios (estacionamiento y unidades sombra) y otras funciones clave del sistema.
+El backend del Sistema de Administración de Balnearios está desarrollado en PHP puro y utiliza un enrutador personalizado para gestionar las diversas operaciones del sistema. Este componente es esencial para la gestión de estadias, registro de clientes, facturación, administración de espacios (estacionamiento y unidades sombra) y otras funciones clave del sistema.
 
 ## Estructura del Proyecto
 
 La estructura del proyecto se organiza de la siguiente manera:
 
 - **/libs:** Contiene archivos y clases esenciales para el funcionamiento del enrutador.
-- **/app/controllers:** Almacena los controladores de cada entidad del sistema, como EstadiaController, ClientesController, EstacionamientoController, UnidadSombraController, UserController, DetalleFacturaController y FacturasController.
-
+- **/app/controllers:** Almacena los controladores de cada entidad del sistema
 
 ## Endpoints y Funcionalidades
 
