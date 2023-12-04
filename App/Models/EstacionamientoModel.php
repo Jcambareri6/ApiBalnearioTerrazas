@@ -39,5 +39,10 @@ class EstacionamientoModel extends DB{
         return $estacionamientosLibres;
     }
 
+    public function updateEstacionamientoM($numero,$libre,$tipo,$id){
+        $query= $this->connect()->prepare('UPDATE estacionamiento SET numero=?,libre=?,tipo=? WHERE id_estacionamiento=?');
+        $query->execute([$numero,$libre,$tipo,$id]);
+     
+    }
 
 }

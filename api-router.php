@@ -30,6 +30,7 @@ $router->addRoute('Estacionamiento', 'GET', 'estacionamientoController','getAll'
 $router->addRoute('Estacionamiento/:FECHAI/:FECHAF', 'GET', 'estacionamientoController','getAll');
 $router->addRoute('Estacionamiento/:ID', 'GET', 'estacionamientoController','getAll');
 $router->addRoute('Estacionamiento', 'POST', 'estacionamientoController','GuardarEstacionamiento');
+$router->addRoute('Estacionamiento/:ID', 'PUT', 'estacionamientoController','updateEstacionamiento');
 // endpoint Unidades Sombra
 $router->addRoute('unidadSombra', 'GET', 'unidadSombraController','getUnidades');
 $router->addRoute('unidadSombra/:ID', 'GET', 'unidadSombraController','getUnidades');

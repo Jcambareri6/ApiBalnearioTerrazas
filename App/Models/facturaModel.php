@@ -33,9 +33,9 @@ class facturaModel extends DB {
       return $factura;
 
    }
-   public function InsertFactura($idEstadia,$total,$precioXdia){
-      $query= $this->connect()->prepare('INSERT INTO facturas (idEstadia, total, precioXdia) VALUES (?,?,?)');
-      if( $query->execute([$idEstadia,$total,$precioXdia])){
+   public function InsertFactura($idEstadia,$total,$precioXdia,$concepto){
+      $query= $this->connect()->prepare('INSERT INTO facturas (idEstadia,total ,precioXdia,concepto) VALUES (?,?,?,?)');
+      if( $query->execute([$idEstadia,$total,$precioXdia,$concepto])){
          $lastInsertId = $this->connect()->query('SELECT MAX(idFacturas) FROM facturas')->fetchColumn();
             return $lastInsertId;
       }else{

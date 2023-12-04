@@ -27,13 +27,30 @@ class facturaController extends ApiController{
     }
     public function guardarFactura(){
         $body=$this->getData();
+        $temporada=120;
         $IdEstadia= $body->idEstadia;
-        $total =  $body->total;
         $precioXdia= $body->precioXdia;
-        if((empty($IdEstadia)|| !is_numeric($IdEstadia)|| !$this->modelEstadia->IDexistente($IdEstadia)||empty($total) || empty($precioXdia))){
+
+        if((empty($IdEstadia)|| !is_numeric($IdEstadia)|| !$this->modelEstadia->IDexistente($IdEstadia) || empty($precioXdia))){
             $this->view->response("error",404);
         }else{
-        $id= $this->model->InsertFactura($IdEstadia,$total,$precioXdia);
+        $fechas= $this->modelEstadia->getFechaInicioyfin($IdEstadia);
+        $fechaInicio = new DateTime($fechas->fechaInicio);
+        $fechaFin = new DateTime($fechas->FechaFin);
+        $diferenciaDias = $fechaFin->diff($fechaInicio)->days;
+        var_dump($diferenciaDias);
+        $total= $precioXdia*$diferenciaDias;
+        switch ($diferenciaDias){
+            case $diferenciaDias>=$temporada:
+                $concepto= "temporada";
+            break;
+            default :
+            $concepto = $diferenciaDias." dias";
+            break;
+
+        }
+  
+        $id= $this->model->InsertFactura($IdEstadia,$total,$precioXdia,$concepto);
          $Factura= $this->model->getFactura($id);
            if($Factura){
              $this->view->response($Factura,201);

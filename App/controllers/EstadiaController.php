@@ -19,7 +19,7 @@ class EstadiaController extends ApiController {
            
             foreach ($estanciasVencidas as $estadia) {
                 if(!empty($estadia)){
-                    $this->modelEstadia->updateEstadia($estadia->id_unidad,$estadia->idEstacionamiento,$estadia->fechaInicio,$estadia->FechaFin,0,1,$estadia->id_Cliente,$estadia->Id_estadia);
+                    $this->modelEstadia->updateEstadiaFinalizada($estadia->Id_estadia);
                     // echo 'modificada';
                 }
                 // var_dump($estanciasVencidas);

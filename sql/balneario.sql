@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2023 a las 16:11:23
+-- Tiempo de generación: 04-12-2023 a las 14:35:55
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -44,13 +44,16 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_Cliente`, `nombre`, `apellido`, `dni`, `telefono`, `localidad`, `email`, `medioDeContacto`, `tipo`) VALUES
-(1, 'joaquin', 'cambareri', '', '2262507023', 'necochea', 'joauqincambareri@', 'telefno', 'sombrilla'),
+(1, 'Joaquin', 'cambareri', '44046999', '02262580775', 'Ciudad Autónoma de Buenos Aires (CABA)', 'joaquin.cambareri@eest3necochea.edu.ar', 'telefno', 'sombrilla'),
 (2, 'franco', 'ruaben', '', '2262507123', 'tandil', 'franco@', '2272333', 'carpa'),
 (4, 'RUSO', 'ANGLADETTE', '', '2262489833', 'Pringles', 'ruso02@gmail', 'email', 'carpa'),
 (5, 'abril', 'Cambareri', '', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla'),
 (6, 'abril', 'Cambareri', '', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla'),
 (7, 'abril', 'Cambareri', '44046999', '2262489833', 'necochea', 'abril@gmail', 'email', 'sombrilla'),
-(8, 'miguel', 'cabodevila', '5392134', '2262445677', 'Tandil', 'Miguel@gmail', 'Telefono', 'sombrilla');
+(8, 'miguel', 'cabodevila', '5392134', '2262445677', 'Tandil', 'Miguel@gmail', 'Telefono', 'sombrilla'),
+(10, 'miguel angel', 'cabodevila', '5392134', '02262580775', 'Ciudad Autónoma de Buenos Aires (CABA)', 'liliagarre@gmail.com', 'gmail', 'sombrilla'),
+(11, 'miguel angel', 'cabodevila', '5392134', '02262580775', 'Ciudad Autónoma de Buenos Aires (CABA)', 'liliagarre@gmail.com', 'gmail', 'sombrilla'),
+(12, 'roberto', 'cambareri', '44046999', '444', 'Necochea - Quequén', 'joaquin.cambareri@eest3necochea.edu.ar', '4', 'sombrilla');
 
 -- --------------------------------------------------------
 
@@ -326,7 +329,10 @@ INSERT INTO `detallefactura` (`id_factura`, `NRO_PAGO`, `pago`, `restan`, `medio
 (258, 1, 30000, 2970000, 'EFECTIVO', 6),
 (259, 1, 1000, 2969000, 'EFECTIVO', 6),
 (260, 1, 2000, 18000, 'EFECTIVO', 4),
-(261, 1, 2000, 18000, 'EFECTIVO', 4);
+(261, 1, 2000, 18000, 'EFECTIVO', 4),
+(262, 1, 2000, 198000, 'efectivo', 4),
+(263, 2, 1200, 196800, 'efectivo', 4),
+(264, 5, 20000, 230000, 'efectivo', 13);
 
 -- --------------------------------------------------------
 
@@ -346,14 +352,17 @@ CREATE TABLE `estacionamiento` (
 --
 
 INSERT INTO `estacionamiento` (`id_estacionamiento`, `numero`, `libre`, `tipo`) VALUES
-(1, 1, 0, ''),
+(1, 12, 1, 'Sombra'),
 (2, 2, 0, ''),
 (3, 1, 1, ''),
 (4, 1, 0, ''),
 (5, 1, 0, ''),
 (6, 1, 1, ''),
 (7, 1, 0, ''),
-(8, 1, 1, '');
+(8, 1, 1, ''),
+(9, 25, 1, 'Sol'),
+(10, 25, 0, 'Sol'),
+(11, 25, 0, 'sombra');
 
 -- --------------------------------------------------------
 
@@ -381,7 +390,9 @@ INSERT INTO `estadia` (`Id_estadia`, `id_unidad`, `idEstacionamiento`, `fechaIni
 (55, 4, 3, '2023-11-18', '0000-00-00', 0, 1, 6),
 (58, 9, 3, '2023-11-22', '2023-11-22', 0, 1, 1),
 (59, 8, NULL, '2023-11-08', '2023-09-09', 0, 1, 6),
-(60, 2, 5, '2023-11-08', '2023-11-09', 0, 1, 1);
+(60, 2, 5, '2023-11-08', '2023-11-09', 0, 1, 1),
+(61, 11, 10, '2023-11-18', '2023-09-22', 0, 1, 1),
+(63, 4, NULL, '2023-12-04', '2023-12-12', 1, 0, 12);
 
 -- --------------------------------------------------------
 
@@ -393,22 +404,25 @@ CREATE TABLE `facturas` (
   `idFacturas` int(11) NOT NULL,
   `idEstadia` int(11) NOT NULL,
   `total` float NOT NULL,
-  `precioXdia` float NOT NULL
+  `precioXdia` float NOT NULL,
+  `concepto` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `facturas`
 --
 
-INSERT INTO `facturas` (`idFacturas`, `idEstadia`, `total`, `precioXdia`) VALUES
-(4, 55, 200000, 20000),
-(5, 55, 0, 1200),
-(6, 55, 2969000, 1200),
-(7, 55, 2002, 1),
-(8, 55, 2002, 1),
-(9, 55, 2002, 1),
-(10, 55, 200000, 20000),
-(11, 55, 2002, 1);
+INSERT INTO `facturas` (`idFacturas`, `idEstadia`, `total`, `precioXdia`, `concepto`) VALUES
+(4, 55, 7, 3000, ''),
+(5, 55, 0, 1200, ''),
+(6, 55, 2969000, 1200, ''),
+(7, 55, 2002, 1, ''),
+(8, 55, 2002, 1, ''),
+(9, 55, 2002, 1, ''),
+(10, 55, 200000, 20000, ''),
+(11, 55, 2002, 1, ''),
+(12, 11, 250000, 1200, ''),
+(13, 59, 230000, 1200, '');
 
 -- --------------------------------------------------------
 
@@ -537,31 +551,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `detallefactura`
 --
 ALTER TABLE `detallefactura`
-  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
+  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
 
 --
 -- AUTO_INCREMENT de la tabla `estacionamiento`
 --
 ALTER TABLE `estacionamiento`
-  MODIFY `id_estacionamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_estacionamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `estadia`
 --
 ALTER TABLE `estadia`
-  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `idFacturas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idFacturas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `integrantes`

@@ -62,6 +62,20 @@ class modelEstadia extends DB{
         $query->execute([$id]);
         return $query->rowCount() > 0;
     }
+    public function updateEstadiaFinalizada($idEstadia){
+        $query= $this->connect()->prepare('UPDATE estadia SET id_unidad=?,idEstacionamiento=?,en_curso=?,finalizo=? WHERE Id_estadia=?');
+        $query->execute([NULL,NULL,0,1,$idEstadia]);
+    }
+
+    public function getFechaInicioyfin($idEstadia){
+        $query= $this->connect()->prepare('SELECT estadia.fechaInicio , estadia.FechaFin 
+        FROM estadia
+        INNER JOIN facturas ON estadia.Id_estadia= facturas.idEstadia WHERE idEstadia=?');
+        $query->execute([$idEstadia]);
+        $fechas= $query->fetch(PDO::FETCH_OBJ);
+        
+        return $fechas;
+    }
 
   
     

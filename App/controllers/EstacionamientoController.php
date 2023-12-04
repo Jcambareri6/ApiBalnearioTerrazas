@@ -41,7 +41,6 @@
         $libre= $body->libre;
         $tipo= $body->tipo;
         if((empty($numero) && !is_numeric($numero)) || !isset($libre) || empty($tipo)){
-          
             $this->view->response("datos incompletos o erroneos");
         }else{
             $lastInsertID = $this->Model->insertEstacionamiento($numero, $libre,$tipo);
@@ -49,5 +48,26 @@
             $this->view->response($estacionamiento, 201);
         }
     }
-  
- }
+    public function updateEstacionamiento($params=null){
+        $id=$params[':ID'];
+        $estacionamiento= $this->Model->getEstacionamiento($id);
+        if($estacionamiento){
+            $body = $this->getData();
+            $numero= $body->numero;
+            $libre= $body->libre;
+            $tipo= $body->tipo;
+        if((empty($numero) && !is_numeric($numero)) || !isset($libre) || empty($tipo)){
+            $this->view->response("datos incompletos o erroneos");
+            
+        }else{
+            
+            $this->Model->updateEstacionamientoM($numero,$libre,$tipo,$id);
+            $this->view->response("se modifico el estacionamiento con el id".$id."correctamente");
+        }
+
+
+    }else{
+        $this->view->response("el estacionamiento con el id ".$id." no existe");
+    }
+}
+}
