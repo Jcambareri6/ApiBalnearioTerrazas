@@ -81,8 +81,6 @@ class EstadiaController extends ApiController {
         $idEstacionamiento = $body->idEstacionamiento;
         $fechaInicio = $body->fechaInicio;
         $FechaFin = $body->FechaFin;
-        $enCurso=$body->en_curso;
-        $finalizo=$body->finalizo;
         $id_Cliente = $body->id_Cliente;
         if ( $idUnidad != null && (!is_numeric($idUnidad) && !ctype_digit($idUnidad))
         ||empty($fechaInicio) || empty($FechaFin) || empty($id_Cliente)||
