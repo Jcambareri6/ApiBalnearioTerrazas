@@ -37,7 +37,8 @@
             $pass = $userpass[1];
 
             $userdata = $this->model->getByEmail($user); // Llamar a la DB
-        
+              var_dump($userdata);
+              die(__FILE__);
             if ( $user==$userdata->username && password_verify($pass,$userdata->password)) {
                 // Usuario es válido
                 $token = $this->authHelper->createToken($userdata);
