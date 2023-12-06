@@ -29,9 +29,9 @@ class facturaController extends ApiController{
         $body=$this->getData();
         $temporada=120;
         $IdEstadia= $body->idEstadia;
-        $precioXdia= $body->precioXdia;
+        $total= $body->total;
 
-        if((empty($IdEstadia)|| !is_numeric($IdEstadia)|| !$this->modelEstadia->IDexistente($IdEstadia) || empty($precioXdia))){
+        if((empty($IdEstadia)|| !is_numeric($IdEstadia)|| !$this->modelEstadia->IDexistente($IdEstadia) || empty($total))){
             $this->view->response("error",404);
         }else{
         $fechas= $this->modelEstadia->getFechaInicioyfin($IdEstadia);
@@ -39,7 +39,7 @@ class facturaController extends ApiController{
         $fechaFin = new DateTime($fechas->FechaFin);
         $diferenciaDias = $fechaFin->diff($fechaInicio)->days;
         var_dump($diferenciaDias);
-        $total= $precioXdia*$diferenciaDias;
+        $precioXdia= $total/$diferenciaDias;
         switch ($diferenciaDias){
             case $diferenciaDias>=$temporada:
                 $concepto= "temporada";
