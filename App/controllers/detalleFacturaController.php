@@ -30,28 +30,39 @@ class detalleFacturaController  extends ApiController {
     public function GuardarDetalle() {
         $body = $this->getData();
 
-        $nroPago = $body->NRO_PAGO;
+       
         $pago = $body->pago;
         $medioDePago = $body->medioDePago;
         $idFacturas = $body->id_Facturas;
    
-        if (empty($nroPago) || empty($pago) || empty($medioDePago) || empty($idFacturas) || !is_numeric($idFacturas)){
+        if ( empty($pago) || empty($medioDePago) || empty($idFacturas) || !is_numeric($idFacturas)){
             $this->view->response("Datos incorrectos", 400);
         } else {
             $montoActual = $this->ModelFacturas->getMontoTotal($idFacturas);
     
             if ($montoActual >= $pago) {
                 $restan = $montoActual - $pago;
-    
+                
                 // Validar que el nuevo total no sea negativo
                 if ($restan < 0) {
                     $this->view->response("Error en el monto", 400);
                     die();
                 }
     
-          
+                $nroPago= $this->ModelDetalleFactura->getNroPago($idFacturas);
+            
+                var_dump($nroPago);
+                if(!empty($nroPago)){
+                    $nroPago=$nroPago->NRO_PAGO+1;
+                    var_dump("INCREMENTE".$nroPago);
+
+                }else{
+                    $nroPago=1;
+                }
                 $lastInsertID = $this->ModelDetalleFactura->InsertDetalleFactura($nroPago, $pago, $restan, $medioDePago, $idFacturas);
+
                 $detalleFac = $this->ModelDetalleFactura->getDetalleFactura($lastInsertID);
+
                 $this->ModelFacturas->updateMonto($restan, $idFacturas);
     
                 if ($detalleFac) {

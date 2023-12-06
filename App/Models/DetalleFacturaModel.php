@@ -37,6 +37,13 @@ class detalleFacturaModel extends DB {
         return $resultado->count > 0;
   
     }
+    public function  getNroPago($idFactura){
+        $query= $this->connect()->prepare('SELECT NRO_PAGO  from detallefactura WHERE id_factura=?');
+        $query->execute([$idFactura]);
+        $nroPago=$query->fetch(PDO::FETCH_OBJ);
+        return $nroPago;
+
+    }
    
    
 }
