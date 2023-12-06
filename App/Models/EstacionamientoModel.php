@@ -44,5 +44,13 @@ class EstacionamientoModel extends DB{
         $query->execute([$numero,$libre,$tipo,$id]);
      
     }
+    public function existeIdEstacionamiento($idEstacionamiento){
+        $query = $this->connect()->prepare('SELECT COUNT(*) as count FROM estacionamiento WHERE id_estacionamiento = ?');
+        $query->execute([$idEstacionamiento]);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+    
+
+        return $result['count'] > 0;
+    }
 
 }

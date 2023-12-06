@@ -1,23 +1,29 @@
 <?php
 require_once './App/Models/ModelEstadia.php';
 require_once 'app/controllers/ApiController.php';
+require_once './App/Models/unidadSombraModel.php';
+require_once './App/Models/EstacionamientoModel.php';
 
 
 class EstadiaController extends ApiController {
     private $modelEstadia;
+    private $modelUnidad;
+    private $modelEstacionamiento;
   
     public function __construct(){
         parent::__construct();
         $this->modelEstadia= new modelEstadia(); 
+        $this->modelUnidad= New  UnidadSombraModel ();
+        $this->modelEstacionamiento =  new EstacionamientoModel();
     }
 
     public function verificarEstadias(){
  
         $fechaActual = date('Y-m-d');
 
-            $estanciasVencidas = $this->modelEstadia->getEstadiasVencidas($fechaActual);
+            $estandiasVencidas = $this->modelEstadia->getEstadiasVencidas($fechaActual);
            
-            foreach ($estanciasVencidas as $estadia) {
+            foreach ($estandiasVencidas as $estadia) {
                 if(!empty($estadia)){
                     $this->modelEstadia->updateEstadiaFinalizada($estadia->Id_estadia);
                     // echo 'modificada';
@@ -82,11 +88,20 @@ class EstadiaController extends ApiController {
         $fechaInicio = $body->fechaInicio;
         $FechaFin = $body->FechaFin;
         $id_Cliente = $body->id_Cliente;
+
         if ( $idUnidad != null && (!is_numeric($idUnidad) && !ctype_digit($idUnidad))
         ||empty($fechaInicio) || empty($FechaFin) || empty($id_Cliente)||
          $idEstacionamiento != null && (!is_numeric($idEstacionamiento) && !ctype_digit($idEstacionamiento)))  {
             $this->view->response("campos incompletos o incorrectos", 404);
         } else {
+            $idUnidadExistente = $this->modelUnidad->existeIdUnidad($idUnidad);
+            $idEstacionamientoExistente = $this->modelEstacionamiento->existeIdEstacionamiento($idEstacionamiento);
+    
+            // Validar que la unidad y el estacionamiento existan
+            if (!$idUnidadExistente || !$idEstacionamientoExistente) {
+                $this->view->response("La unidad o el estacionamiento no existe", 404);
+                return;
+            }
             $lastInsertID = $this->modelEstadia->InsertEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente);
 
             $estadia = $this->modelEstadia->getEstadia($lastInsertID);

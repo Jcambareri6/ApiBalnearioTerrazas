@@ -33,9 +33,16 @@ class UnidadSombraModel extends DB {
         $unidadesSombrasLibres= $query->fetchAll(PDO::FETCH_OBJ);
         return $unidadesSombrasLibres;
     }
-    public function UpdateUnidad($Libre){
-        // UPDATE estadia SET id_unidad=?,idEstacionamiento=?,fechaInicio=?,FechaFin=?,en_curso=?,finalizo=?,id_Cliente=? WHERE Id_estadia = ?
+    // public function UpdateUnidad($Libre){
+    //     // UPDATE estadia SET id_unidad=?,idEstacionamiento=?,fechaInicio=?,FechaFin=?,en_curso=?,finalizo=?,id_Cliente=? WHERE Id_estadia = ?
         
+    // }
+    public function existeIdUnidad($idUnidad){
+        $query = $this->connect()->prepare('SELECT COUNT(*) as count FROM unidadsombra WHERE id_unidad = ?');
+        $query->execute([$idUnidad]);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        return $result['count'] > 0;
     }
+
 
 }
