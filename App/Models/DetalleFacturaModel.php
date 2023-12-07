@@ -17,10 +17,10 @@ class detalleFacturaModel extends DB {
     }
     public function InsertDetalleFactura($nroPago,$pago,$restan,$medioDePago,$idFacturas){
         $query= $this->connect()->prepare('INSERT INTO detallefactura (NRO_PAGO,pago,restan, medioDePago,id_Facturas) values (?,?,?,?,?)');
-       if( $query->execute([$nroPago,$pago,$restan,$medioDePago,$idFacturas])){
-        return $this->connect()->query('SELECT MAX(id_factura) FROM detallefactura')->fetchColumn(); 
-       }
-       return false;
+        if ($query->execute([$nroPago, $pago, $restan, $medioDePago, $idFacturas])) {
+            return $this->connect()->lastInsertId(); // Usar lastInsertId() en lugar de una nueva consulta
+        }
+        return false;
     }
     public function updateDetalleFactura($nroPago,$total,$pago,$restan,$medioDePago,$id){
         // 'UPDATE detallefactura SET NRO_PAGO=?,total=?,restan=?,medioDePago=? WHERE idFactura=? '
@@ -38,12 +38,22 @@ class detalleFacturaModel extends DB {
   
     }
     public function  getNroPago($idFactura){
-        $query= $this->connect()->prepare('SELECT NRO_PAGO  from detallefactura WHERE id_factura=?');
+        $query = $this->connect()->prepare('SELECT NRO_PAGO FROM detallefactura WHERE id_facturas=? ORDER BY NRO_PAGO DESC LIMIT 1');
         $query->execute([$idFactura]);
-        $nroPago=$query->fetch(PDO::FETCH_OBJ);
+        $nroPago = $query->fetch(PDO::FETCH_OBJ);
+        
+        if ($nroPago) {
+            // Si hay una entrada, incrementa el número de pago
+            $nroPago = $nroPago->NRO_PAGO + 1;
+        } else {
+            // Si no hay entradas, asigna el valor 1
+            $nroPago = 1;
+        }
+        
         return $nroPago;
-
+        
     }
+    
    
    
 }

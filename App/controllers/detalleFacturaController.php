@@ -42,23 +42,17 @@ class detalleFacturaController  extends ApiController {
     
             if ($montoActual >= $pago) {
                 $restan = $montoActual - $pago;
-                
+                $nroPago= $this->ModelDetalleFactura->getNroPago($idFacturas);
+                 
                 // Validar que el nuevo total no sea negativo
                 if ($restan < 0) {
                     $this->view->response("Error en el monto", 400);
                     die();
                 }
     
-                $nroPago= $this->ModelDetalleFactura->getNroPago($idFacturas);
+              
             
-                var_dump($nroPago);
-                if(!empty($nroPago)){
-                    $nroPago=$nroPago->NRO_PAGO+1;
-                    var_dump("INCREMENTE".$nroPago);
-
-                }else{
-                    $nroPago=1;
-                }
+             
                 $lastInsertID = $this->ModelDetalleFactura->InsertDetalleFactura($nroPago, $pago, $restan, $medioDePago, $idFacturas);
 
                 $detalleFac = $this->ModelDetalleFactura->getDetalleFactura($lastInsertID);
