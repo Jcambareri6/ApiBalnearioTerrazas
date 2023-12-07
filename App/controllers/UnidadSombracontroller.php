@@ -15,9 +15,10 @@ class unidadSombraController extends ApiController{
         }else{
             $fecha_inicio = $params[':FECHAI'] ?? null;
             $fecha_fin = $params[':FECHAF'] ?? null;
+            $tipo=  $params[':TIPO'] ?? null;
     
             if ($fecha_inicio !== null && $fecha_fin !== null) {
-                $UnidadesLibres = $this->Model->seleccionarUnidadesDisponiblesFecha($fecha_inicio,$fecha_fin);
+                $UnidadesLibres = $this->Model->seleccionarUnidadesDisponiblesFecha($tipo,$fecha_inicio,$fecha_fin);
                 if(!empty($UnidadesLibres)){
                 $this->view->response($UnidadesLibres);
                 }else{ $this->view->response("no hay unidades libres en esa fecha");}

@@ -28,12 +28,7 @@ class EstacionamientoModel extends DB{
      }
      public function buscarEstacionamiento($fechaInicio, $fechaFin){
         
-        $query = $this->connect()->prepare('SELECT  e.*
-        FROM estacionamiento e
-        JOIN estadia es ON e.id_estacionamiento = es.idEstacionamiento
-        WHERE e.libre = ?
-        AND es.fechaInicio <= ?;  
-        AND es.FechaFin >= ?');
+        $query = $this->connect()->prepare('SELECT e.* FROM estacionamiento e LEFT JOIN estadia es ON e.id_estacionamiento = es.idEstacionamiento WHERE e.libre = ? AND (es.fechaInicio IS NULL OR es.FechaFin IS NULL OR es.fechaInicio > ? OR es.FechaFin < ?)');
         $query->execute([ '0',$fechaInicio, $fechaFin]);
         $estacionamientosLibres= $query->fetchAll(PDO::FETCH_OBJ);
         return $estacionamientosLibres;

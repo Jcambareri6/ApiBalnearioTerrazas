@@ -22,12 +22,8 @@ class UnidadSombraModel extends DB {
             return false;
         }
     }
-    public function seleccionarUnidadesDisponiblesFecha($fechaInicio, $fechaFin){
-        $query = $this->connect()->prepare('SELECT unidadsombra.* FROM unidadsombra JOIN estadia es 
-        ON unidadsombra.id_unidad = es.id_unidad WHERE 
-         unidadsombra.libre = ?
-          AND es.fechaInicio <= ?
-           AND es.FechaFin >= ?');
+    public function seleccionarUnidadesDisponiblesFecha($tipo,$fechaInicio, $fechaFin){
+        $query = $this->connect()->prepare('SELECT unidadsombra.* FROM unidadsombra LEFT JOIN estadia es ON unidadsombra.id_unidad = es.id_unidad WHERE unidadsombra.libre =? AND (es.fechaInicio IS NULL OR es.fechaInicio <= ?) AND (es.FechaFin IS NULL OR es.FechaFin >= ?)');
         $query->execute([ '0',$fechaInicio, $fechaFin]);
 
         $unidadesSombrasLibres= $query->fetchAll(PDO::FETCH_OBJ);

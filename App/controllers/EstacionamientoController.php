@@ -18,12 +18,15 @@
         
           $fecha_inicio = $params[':FECHAI'] ?? null;
           $fecha_fin = $params[':FECHAF'] ?? null;
-  
+       
+
+
           if ($fecha_inicio !== null && $fecha_fin !== null) {
               $estacionamientos = $this->Model->buscarEstacionamiento($fecha_inicio,$fecha_fin);
+            
               if(!empty($estacionamientos)){
               $this->view->response($estacionamientos);
-              }else{ $this->view->response("no hay estacionamientos libres en esa fecha");}
+              }else{ $this->view->response("no hay estacionamientos libres en esa fecha",404);}
           } else {
             
               $estacionamiento = $this->Model->getEstacionamiento($params[':ID']);
