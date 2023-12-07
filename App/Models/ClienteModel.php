@@ -32,6 +32,12 @@ class clienteModel extends DB{
         $query = $this->connect()->prepare('DELETE FROM clientes WHERE id_Cliente = ?');
         $query->execute([$id]);
     }
+    public function existeIdCliente($idCliente){
+        $query = $this->connect()->prepare('SELECT COUNT(*) as count FROM clientes WHERE id_Cliente = ?');
+        $query->execute([$idCliente]);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        return $result['count'] > 0;
+    }
 
 
 }
