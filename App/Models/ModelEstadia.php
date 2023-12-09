@@ -68,9 +68,9 @@ class modelEstadia extends DB{
     }
 
     public function getFechaInicioyfin($idEstadia){
+        var_dump($idEstadia);
         $query= $this->connect()->prepare('SELECT estadia.fechaInicio , estadia.FechaFin 
-        FROM estadia
-        INNER JOIN facturas ON estadia.Id_estadia= facturas.idEstadia WHERE idEstadia=?');
+        FROM estadia  WHERE Id_estadia=?');
         $query->execute([$idEstadia]);
         $fechas= $query->fetch(PDO::FETCH_OBJ);
         

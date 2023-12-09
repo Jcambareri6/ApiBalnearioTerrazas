@@ -29,8 +29,6 @@ class detalleFacturaController  extends ApiController {
     }
     public function GuardarDetalle() {
         $body = $this->getData();
-
-       
         $pago = $body->pago;
         $medioDePago = $body->medioDePago;
         $idFacturas = $body->id_Facturas;

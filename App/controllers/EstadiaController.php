@@ -101,11 +101,10 @@ class EstadiaController extends ApiController {
             $idEstacionamientoExistente = ($idEstacionamiento !== null) ? $this->modelEstacionamiento->existeIdEstacionamiento($idEstacionamiento) : true;
             
             // Validar que la unidad y el estacionamiento existan si los IDs no son null
-            if ($idUnidad !== null && $idEstacionamiento !== null && (!$idUnidadExistente || !$idEstacionamientoExistente)) {
+            if (($idUnidad !== null || $idEstacionamiento !== null) && (!$idUnidadExistente || !$idEstacionamientoExistente)) {
                 $this->view->response("La unidad o el estacionamiento no existe", 404);
-                return;
-            }  
-            
+                die();
+            }
             $lastInsertID = $this->modelEstadia->InsertEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente);
 
             $estadia = $this->modelEstadia->getEstadia($lastInsertID);

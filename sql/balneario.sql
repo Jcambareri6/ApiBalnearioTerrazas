@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2023 a las 13:19:32
+-- Tiempo de generación: 09-12-2023 a las 14:18:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,6 +39,21 @@ CREATE TABLE `clientes` (
   `tipo` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id_Cliente`, `nombre`, `apellido`, `dni`, `telefono`, `localidad`, `email`, `medioDeContacto`, `tipo`) VALUES
+(1, 'Nicolas', 'Angladette', '44831634', '02262486975', 'La Plata', 'nicoruso37@outlook.com', 'Redes', 'sombrilla'),
+(6, 'Natalia', 'Colantonio', '2132432', '2262303506', 'Necochea', 'colantonio_n@hotmail.com', 'telefono', 'sombrilla'),
+(7, 'Joaquin', 'Cambareri', '23948272', '226293826', 'Necochea', 'camba@gmail.com', 'Compu', 'sombrilla'),
+(8, 'Franco', 'Ruaben', '43928372', '2262937263', 'Tandil', 'Franco@gmail.com', 'Redes', 'carpa'),
+(9, 'Joaquin', 'Cambareri', '43902826', '226287394', 'Azul', 'camba@gmail.com', 'Redes', 'sombrilla'),
+(10, 'Joaquin', 'cambareri', '44046999', '02262580775', 'Necochea - Quequén', 'joaquin.cambareri@eest3necochea.edu.ar', 'gmail', 'sombrilla'),
+(11, 'Joaquin', 'cambareri', '44046999', '02262580775', 'Necochea - Quequén', 'joaquin.cambareri@eest3necochea.edu.ar', 'gmail', 'sombrilla'),
+(12, 'Joaquin', 'cambareri', '44046999', '02262580775', 'Tandil', 'joaquincambareri@gmail.com', 'gmail', 'sombrilla'),
+(13, 'Joaquin', 'cambareri', '44046999', '02262580775', 'Necochea - Quequén', 'joaquin.cambareri@eest3necochea.edu.ar', 'gmail', 'sombrilla');
+
 -- --------------------------------------------------------
 
 --
@@ -67,6 +82,14 @@ CREATE TABLE `estacionamiento` (
   `tipo` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `estacionamiento`
+--
+
+INSERT INTO `estacionamiento` (`id_estacionamiento`, `numero`, `libre`, `tipo`) VALUES
+(1, 1, 0, 'Sol'),
+(2, 20, 0, 'Sombra');
+
 -- --------------------------------------------------------
 
 --
@@ -84,6 +107,18 @@ CREATE TABLE `estadia` (
   `id_Cliente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `estadia`
+--
+
+INSERT INTO `estadia` (`Id_estadia`, `id_unidad`, `idEstacionamiento`, `fechaInicio`, `FechaFin`, `en_curso`, `finalizo`, `id_Cliente`) VALUES
+(1, NULL, 1, '2023-12-08', '2023-12-15', 1, 0, 8),
+(2, 2, NULL, '2023-12-05', '2023-12-15', 1, 0, 7),
+(3, 1, 2, '2023-12-21', '2023-12-30', 1, 0, 6),
+(4, 1, NULL, '2023-12-23', '2023-12-30', 1, 0, 9),
+(5, 2, 2, '2024-01-01', '2024-01-07', 1, 0, 13),
+(6, 2, 2, '2024-01-04', '2024-01-13', 1, 0, 7);
+
 -- --------------------------------------------------------
 
 --
@@ -97,6 +132,15 @@ CREATE TABLE `facturas` (
   `precioXdia` float NOT NULL,
   `concepto` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `facturas`
+--
+
+INSERT INTO `facturas` (`idFacturas`, `idEstadia`, `total`, `precioXdia`, `concepto`) VALUES
+(1, 2, 290000, 12000, '30 dias'),
+(2, 2, 250000, 25000, '10 dias'),
+(3, 2, 250000, 25000, '10 dias');
 
 -- --------------------------------------------------------
 
@@ -122,6 +166,14 @@ CREATE TABLE `unidadsombra` (
   `numero` int(11) NOT NULL,
   `libre` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `unidadsombra`
+--
+
+INSERT INTO `unidadsombra` (`id_unidad`, `tipo`, `numero`, `libre`) VALUES
+(1, 'Carpa', 10, 0),
+(2, 'Sombrilla', 11, 0);
 
 -- --------------------------------------------------------
 
@@ -207,7 +259,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `detallefactura`
@@ -219,19 +271,19 @@ ALTER TABLE `detallefactura`
 -- AUTO_INCREMENT de la tabla `estacionamiento`
 --
 ALTER TABLE `estacionamiento`
-  MODIFY `id_estacionamiento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_estacionamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `estadia`
 --
 ALTER TABLE `estadia`
-  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_estadia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `idFacturas` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFacturas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `integrantes`
@@ -243,7 +295,7 @@ ALTER TABLE `integrantes`
 -- AUTO_INCREMENT de la tabla `unidadsombra`
 --
 ALTER TABLE `unidadsombra`
-  MODIFY `id_unidad` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_unidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

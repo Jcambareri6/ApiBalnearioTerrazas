@@ -35,10 +35,11 @@ class facturaController extends ApiController{
             $this->view->response("error",404);
         }else{
         $fechas= $this->modelEstadia->getFechaInicioyfin($IdEstadia);
+      
         $fechaInicio = new DateTime($fechas->fechaInicio);
         
         $fechaFin = new DateTime($fechas->FechaFin);
-        $diferenciaDias = $fechaFin->diff($fechaInicio)->days;
+        $diferenciaDias = $fechaInicio->diff($fechaFin)->days;
        
         $precioXdia= $total/$diferenciaDias;
         switch ($diferenciaDias){
