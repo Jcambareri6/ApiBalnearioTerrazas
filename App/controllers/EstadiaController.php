@@ -105,8 +105,17 @@ class EstadiaController extends ApiController {
                 $this->view->response("La unidad o el estacionamiento no existe", 404);
                 die();
             }
+            if ($idUnidad !== null) {
+                $this->modelUnidad->actualizarEstadoUnidad($idUnidad, 1); // 1 indica que la unidad está ocupada
+                var_dump($idUnidad);
+                
+            }
+    
+            if ($idEstacionamiento !== null) {
+                $this->modelEstacionamiento->actualizarEstadoEstacionamiento($idEstacionamiento, 1); // 1 indica que el estacionamiento está ocupado
+            }
             $lastInsertID = $this->modelEstadia->InsertEstadia($idUnidad, $idEstacionamiento, $fechaInicio, $FechaFin, $id_Cliente);
-
+ 
             $estadia = $this->modelEstadia->getEstadia($lastInsertID);
             $this->view->response($estadia, 201);
         }

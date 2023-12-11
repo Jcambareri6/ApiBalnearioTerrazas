@@ -45,5 +45,9 @@ class EstacionamientoModel extends DB{
         $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result['count'] > 0;
     }
+    public function actualizarEstadoEstacionamiento($idEstacionamiento, $estado) {
+        $query = $this->connect()->prepare("UPDATE estacionamiento SET libre = ? WHERE id_estacionamiento =? ");
+        $query->execute([$estado,$idEstacionamiento]);
+    }
 
 }

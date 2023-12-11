@@ -7,33 +7,52 @@ class unidadSombraController extends ApiController{
         parent::__construct();
         $this->Model= new UnidadSombraModel();
     } 
-    public function getUnidades($params){
-        if (empty($params)) {
-            $unidades = $this->Model->getUnidadesLibres();
-            $this->view->response($unidades);
+    public function validarFechas($fechaIni,$fechaFin){
+        $start_date_valid = strtotime($fechaIni) !== false;
+            $end_date_valid = strtotime($fechaFin) !== false;
+        return $start_date_valid && $end_date_valid;
+    }
+    public function getUnidades($params) {
+        // Verifica si se proporcionaron parámetros en la URL
+        if (isset($_GET['field'], $_GET['value'], $_GET['start_date'], $_GET['end_date'])) {
+            $field = $_GET['field'];
+            $value = $_GET['value'];
+            $start_date = $_GET['start_date'];
+            $end_date = $_GET['end_date'];
         
-        }else{
-            $fecha_inicio = $params[':FECHAI'] ?? null;
-            $fecha_fin = $params[':FECHAF'] ?? null;
-            $tipo=  $params[':TIPO'] ?? null;
+            if ($this->validarFechas($start_date,$end_date)) {
+                // Obtener unidades por campo, valor y rango de fechas
+                $unidadSombra = $this->Model->getByFieldValueAndDateRange($field, $value, $start_date, $end_date);
     
-            if ($fecha_inicio !== null && $fecha_fin !== null) {
-                $UnidadesLibres = $this->Model->seleccionarUnidadesDisponiblesFecha($tipo,$fecha_inicio,$fecha_fin);
-                if(!empty($UnidadesLibres)){
-                $this->view->response($UnidadesLibres);
-                }else{ $this->view->response("no hay unidades libres en esa fecha");}
-            } else {
-      
-                $unidad = $this->Model->getUnidad($params[':ID']);
-                if ($unidad) {
-                    $this->view->response($unidad);
+                if (!empty($unidadSombra)) {
+                    $this->view->response($unidadSombra, 200);
+                    // Sale de la función para evitar la ejecución de código adicional
+                    die();
                 } else {
-                    $this->view->response("la unidad  con el id no existe", 404);
+                    $this->view->response("No hay unidades disponibles en el rango de fechas especificado", 404);
+                    // Sale de la función para evitar la ejecución de código adicional
+                    die();;
                 }
+            } else {
+                $this->view->response("Fechas inválidas", 400);
+                // Sale de la función para evitar la ejecución de código adicional
+                die();
             }
         }
-       
+    
+        // Si no se proporcionaron parámetros, obtén todas las unidades disponibles
+        if(empty($params)){
+            // echo 'hola entre al getAll';
+            $unidadSombra = $this->Model->getUnidades();
+            $this->view->response($unidadSombra, 200);
+        }else{
+            $estadia = $this->Model->getUnidad($params[':ID']);
+            $this->view->response($estadia,200);
+        }
+     
     }
+    
+    
     public function GuardarUnidadSombra(){
         $body=$this->getData();
         $tipo= $body->tipo;
@@ -41,6 +60,7 @@ class unidadSombraController extends ApiController{
         $libre= $body->libre;
         if((empty($numero) && !is_numeric($numero)) || empty($libre)){
             $this->view->response("datos incompletos o erroneos");
+            die();
         }else{
             $lastInsertID = $this->Model->GuardarUnidad($tipo,$numero, $libre);
             $unidad = $this->Model->getUnidad($lastInsertID);
