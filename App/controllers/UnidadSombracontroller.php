@@ -19,8 +19,9 @@ class unidadSombraController extends ApiController{
             $value = $_GET['value'];
             $start_date = $_GET['start_date'];
             $end_date = $_GET['end_date'];
-        
-            if ($this->validarFechas($start_date,$end_date)) {
+            $allowedField= ['tipo','numero','libre'];
+          
+            if ($this->validarFechas($start_date,$end_date) && in_array($field,$allowedField)) {
                 // Obtener unidades por campo, valor y rango de fechas
                 $unidadSombra = $this->Model->getByFieldValueAndDateRange($field, $value, $start_date, $end_date);
     
@@ -34,7 +35,7 @@ class unidadSombraController extends ApiController{
                     die();;
                 }
             } else {
-                $this->view->response("Fechas inválidas", 400);
+                $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
                
                 die();
             }
