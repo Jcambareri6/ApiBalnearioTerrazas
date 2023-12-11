@@ -35,7 +35,7 @@ class unidadSombraController extends ApiController{
                 }
             } else {
                 $this->view->response("Fechas inválidas", 400);
-                // Sale de la función para evitar la ejecución de código adicional
+               
                 die();
             }
         }
