@@ -43,7 +43,7 @@
         $numero= $body->numero;
         $libre= $body->libre;
         $tipo= $body->tipo;
-        if((empty($numero) && !is_numeric($numero)) || !isset($libre) || empty($tipo)){
+        if((empty($numero) && !is_numeric($numero)) || !isset($libre) || !in_array($libre, [0, 1] ) || empty($tipo)){
             $this->view->response("datos incompletos o erroneos");
         }else{
             $lastInsertID = $this->Model->insertEstacionamiento($numero, $libre,$tipo);

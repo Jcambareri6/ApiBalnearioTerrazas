@@ -32,7 +32,7 @@ class unidadSombraController extends ApiController{
                 } else {
                     $this->view->response("No hay unidades disponibles en el rango de fechas especificado", 404);
                     // Sale de la función para evitar la ejecución de código adicional
-                    die();;
+                    die();
                 }
             } else {
                 $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
@@ -59,7 +59,7 @@ class unidadSombraController extends ApiController{
         $tipo= $body->tipo;
         $numero= $body->numero;
         $libre= $body->libre;
-        if((empty($numero) && !is_numeric($numero)) || empty($libre)){
+        if((empty($numero) && !is_numeric($numero)) || !isset($libre) || !in_array($libre, [0, 1] )){
             $this->view->response("datos incompletos o erroneos");
             die();
         }else{
