@@ -9,35 +9,33 @@
         $this->Model= new EstacionamientoModel();
     }
 
-    public function getAll($params = null){
-      if (empty($params)) {
-          // No se proporcionaron parámetros, obtener todos los estacionamientos libres
-          $estacionamientos = $this->Model->getEstacionamientosLibres();
-          $this->view->response($estacionamientos);
-      } else {
+    public function getAll($params = null) {
+        if (isset($_GET['field'], $_GET['value'], $_GET['start_date'], $_GET['end_date'])) {
+            $field = $_GET['field'];
+            $value = $_GET['value'];
+            $start_date = $_GET['start_date'];
+            $end_date = $_GET['end_date'];
+            $allowedField = ['numero', 'libre', 'tipo'];
+            $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField);
+        } else {
+            $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
+            die();
+        }
         
-          $fecha_inicio = $params[':FECHAI'] ?? null;
-          $fecha_fin = $params[':FECHAF'] ?? null;
-       
-
-
-          if ($fecha_inicio !== null && $fecha_fin !== null) {
-              $estacionamientos = $this->Model->buscarEstacionamiento($fecha_inicio,$fecha_fin);
-            
-              if(!empty($estacionamientos)){
-              $this->view->response($estacionamientos);
-              }else{ $this->view->response("no hay estacionamientos libres en esa fecha",404);}
-          } else {
-            
-              $estacionamiento = $this->Model->getEstacionamiento($params[':ID']);
-              if ($estacionamiento) {
-                  $this->view->response($estacionamiento);
-              } else {
-                  $this->view->response("el estacionamiento  con el id no existe", 404);
-              }
-          }
-      }
-  }
+        $this->view->response("No hay unidades disponibles en el rango de fechas especificado", 404);
+        die();
+    
+        if (empty($params)) {
+            $estacionamientos = $this->Model->getEstacionamientos();
+            $this->view->response($estacionamientos);
+        }
+    }
+    
+  public function validarFechas($fechaIni,$fechaFin){
+    $start_date_valid = strtotime($fechaIni) !== false;
+        $end_date_valid = strtotime($fechaFin) !== false;
+    return $start_date_valid && $end_date_valid;
+}
     public function GuardarEstacionamiento(){
         $body = $this->getData();
         $numero= $body->numero;

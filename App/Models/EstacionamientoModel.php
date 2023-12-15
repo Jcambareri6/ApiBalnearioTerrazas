@@ -2,10 +2,10 @@
 require_once './App/Models/Model.php';
 class EstacionamientoModel extends DB{
 
-    public function getEstacionamientosLibres()
+    public function getEstacionamientos()
     {
-        $query = $this->connect()->prepare('SELECT * FROM estacionamiento WHERE libre=?');
-        $query->execute(['0']);
+        $query = $this->connect()->prepare('SELECT * FROM estacionamiento');
+        $query->execute();
         $estacionamientos = $query->fetchAll(PDO::FETCH_OBJ);
         // var_dump($estacionamientos);
         // die(__FILE__);
@@ -49,5 +49,31 @@ class EstacionamientoModel extends DB{
         $query = $this->connect()->prepare("UPDATE estacionamiento SET libre = ? WHERE id_estacionamiento =? ");
         $query->execute([$estado,$idEstacionamiento]);
     }
-
+    public function getByFieldValueAndDateRange($field, $value, $start_date, $end_date) {
+        $query = $this->connect()->prepare("
+            SELECT DISTINCT estacionamiento.*
+            FROM estacionamiento 
+            LEFT JOIN estadia e ON estacionamiento.id_estacionamiento = e.idEstacionamiento
+            WHERE estacionamiento.$field = :value
+              AND NOT EXISTS (
+                  SELECT 1
+                  FROM estadia e2
+                  WHERE e.idEstacionamiento = e2.idEstacionamiento
+                    AND (
+                        (e2.fechaInicio <= :end_date AND (e2.fechaFin >= :start_date OR e2.fechaFin IS NULL)) OR
+                        (e2.fechaInicio <= :start_date AND (e2.fechaFin >= :start_date OR e2.fechaFin IS NULL)) OR
+                        (e2.fechaInicio >= :start_date AND e2.fechaFin <= :end_date)
+                    )
+              )
+              AND (e.fechaInicio IS NULL OR e.fechaFin IS NULL OR (e.fechaInicio > :end_date OR e.fechaFin < :start_date))
+        ");
+        $query->execute([
+            'value' => $value,
+            'start_date' => $start_date,
+            'end_date' => $end_date
+        ]);
+    
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+    
 }

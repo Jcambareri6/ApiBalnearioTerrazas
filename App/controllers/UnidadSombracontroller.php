@@ -21,25 +21,13 @@ class unidadSombraController extends ApiController{
             $end_date = $_GET['end_date'];
             $allowedField= ['tipo','numero','libre'];
           
-            if ($this->validarFechas($start_date,$end_date) && in_array($field,$allowedField)) {
-                // Obtener unidades por campo, valor y rango de fechas
-                $unidadSombra = $this->Model->getByFieldValueAndDateRange($field, $value, $start_date, $end_date);
-    
-                if (!empty($unidadSombra)) {
-                    $this->view->response($unidadSombra, 200);
-                    // Sale de la función para evitar la ejecución de código adicional
-                    die();
-                } else {
-                    $this->view->response("No hay unidades disponibles en el rango de fechas especificado", 404);
-                    // Sale de la función para evitar la ejecución de código adicional
-                    die();
-                }
+            $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField);
             } else {
                 $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
                
                 die();
             }
-        }
+        
     
         // Si no se proporcionaron parámetros, obtén todas las unidades disponibles
         if(empty($params)){
@@ -50,8 +38,10 @@ class unidadSombraController extends ApiController{
             $estadia = $this->Model->getUnidad($params[':ID']);
             $this->view->response($estadia,200);
         }
-     
     }
+    
+     
+    
     
     
     public function GuardarUnidadSombra(){
