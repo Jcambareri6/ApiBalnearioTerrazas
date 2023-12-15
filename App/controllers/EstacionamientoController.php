@@ -22,7 +22,7 @@
         }
       
         if (empty($params)) {
-            var_dump("entre a el vardum del empty params");
+     
             $estacionamientos = $this->Model->getEstacionamientos();
             $this->view->response($estacionamientos);
         }

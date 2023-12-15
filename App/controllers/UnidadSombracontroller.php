@@ -14,6 +14,7 @@ class unidadSombraController extends ApiController{
     }
     public function getUnidades($params) {
         // Verifica si se proporcionaron parámetros en la URL
+    
         if (isset($_GET['field'], $_GET['value'], $_GET['start_date'], $_GET['end_date'])) {
             $field = $_GET['field'];
             $value = $_GET['value'];
@@ -22,16 +23,14 @@ class unidadSombraController extends ApiController{
             $allowedField= ['tipo','numero','libre'];
           
             $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField);
-            // } else {
-            //     $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
-               
-            //     die();
+            var_dump(  $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField));
+          
         }
         
     
         // Si no se proporcionaron parámetros, obtén todas las unidades disponibles
         if(empty($params)){
-            // echo 'hola entre al getAll';
+            echo 'hola entre al getAll';
             $unidadSombra = $this->Model->getUnidades();
             $this->view->response($unidadSombra, 200);
         }else{
