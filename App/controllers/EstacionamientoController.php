@@ -10,22 +10,19 @@
     }
 
     public function getAll($params = null) {
-        if (isset($_GET['field'], $_GET['value'], $_GET['start_date'], $_GET['end_date'])) {
-            $field = $_GET['field'];
-            $value = $_GET['value'];
+        if (isset( $_GET['start_date'], $_GET['end_date'])) {
+         
+     
             $start_date = $_GET['start_date'];
             $end_date = $_GET['end_date'];
-            $allowedField = ['numero', 'libre', 'tipo'];
-            $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField);
-        } else {
-            $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
-            die();
+          
+           $estacionamiento= $this->Model->seleccionarDisponibles( $start_date,$end_date);
+           $this->view->response($estacionamiento,200);
+           die();
         }
-        
-        $this->view->response("No hay unidades disponibles en el rango de fechas especificado", 404);
-        die();
-    
+      
         if (empty($params)) {
+            var_dump("entre a el vardum del empty params");
             $estacionamientos = $this->Model->getEstacionamientos();
             $this->view->response($estacionamientos);
         }

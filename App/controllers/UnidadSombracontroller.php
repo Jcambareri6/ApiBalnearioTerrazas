@@ -22,11 +22,11 @@ class unidadSombraController extends ApiController{
             $allowedField= ['tipo','numero','libre'];
           
             $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField);
-            } else {
-                $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
+            // } else {
+            //     $this->view->response("Fechas inválidas o campo de filtrado incorrectos", 400);
                
-                die();
-            }
+            //     die();
+        }
         
     
         // Si no se proporcionaron parámetros, obtén todas las unidades disponibles

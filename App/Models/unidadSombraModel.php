@@ -41,7 +41,7 @@ class UnidadSombraModel extends DB {
             SELECT DISTINCT u.*
             FROM unidadsombra u
             LEFT JOIN estadia e ON u.id_unidad = e.id_unidad
-            WHERE u.$field = :value
+         
               AND NOT EXISTS (
                   SELECT 1
                   FROM estadia e2
