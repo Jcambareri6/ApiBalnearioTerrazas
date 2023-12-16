@@ -25,14 +25,22 @@
      
             $estacionamientos = $this->Model->getEstacionamientos();
             $this->view->response($estacionamientos);
+        }else{
+            $id= $params[':ID'];
+           $estacionamiento=  $this->Model->getEstacionamiento($id);
+           if(!empty($estacionamiento)){
+            $this->view->response($estacionamiento);
+            
+
+        }else{
+            $this->view->response("el estacionamiento con el id ".$id." no existe");
+            die();
+        }
+        
         }
     }
     
-  public function validarFechas($fechaIni,$fechaFin){
-    $start_date_valid = strtotime($fechaIni) !== false;
-        $end_date_valid = strtotime($fechaFin) !== false;
-    return $start_date_valid && $end_date_valid;
-}
+
     public function GuardarEstacionamiento(){
         $body = $this->getData();
         $numero= $body->numero;

@@ -23,14 +23,14 @@ class unidadSombraController extends ApiController{
             $allowedField= ['tipo','numero','libre'];
           
             $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField);
-            var_dump(  $this->getByFieldAndDateRange($this->Model, $field, $value, $start_date, $end_date, $allowedField));
+         
           
         }
         
     
         // Si no se proporcionaron parámetros, obtén todas las unidades disponibles
         if(empty($params)){
-            echo 'hola entre al getAll';
+    
             $unidadSombra = $this->Model->getUnidades();
             $this->view->response($unidadSombra, 200);
         }else{

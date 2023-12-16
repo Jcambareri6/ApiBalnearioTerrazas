@@ -15,7 +15,7 @@ class EstacionamientoModel extends DB{
     {
         $query = $this->connect()->prepare('SELECT * FROM  estacionamiento WHERE id_estacionamiento=?');
         $query->execute([$id]);
-        $Estacionamiento = $query->fetchAll(PDO::FETCH_OBJ);
+        $Estacionamiento = $query->fetch(PDO::FETCH_OBJ);
         return $Estacionamiento;
     }
 
