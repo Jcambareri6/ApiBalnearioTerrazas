@@ -10,19 +10,29 @@
     }
 
     public function getAll($params = null) {
-        if (isset( $_GET['start_date'], $_GET['end_date'])) {
+        if (isset( $_GET['start_date'], $_GET['end_date'])){
          
      
             $start_date = $_GET['start_date'];
             $end_date = $_GET['end_date'];
+            if($this->validarFechas($start_date,$end_date)){
+                $estacionamientos= $this->Model->seleccionarDisponibles( $start_date,$end_date);
+                if(!empty($estacionamientos)){
+                    $this->view->response($estacionamientos,200);
+                    die();
+                }else{
+                    $this->view->response("no hay estadias en ese rango de fechas",404);
+                }
+             
+            }else{
+                $this->view->response("fechas incorrectas",404);
+            }
           
-           $estacionamiento= $this->Model->seleccionarDisponibles( $start_date,$end_date);
-           $this->view->response($estacionamiento,200);
-           die();
+         
         }
       
         if (empty($params)) {
-     
+   
             $estacionamientos = $this->Model->getEstacionamientos();
             $this->view->response($estacionamientos);
         }else{

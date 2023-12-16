@@ -51,21 +51,22 @@ class EstacionamientoModel extends DB{
     }
     public function seleccionarDisponibles( $start_date, $end_date) {
         $query = $this->connect()->prepare("
-            SELECT DISTINCT estacionamiento.*
-            FROM estacionamiento 
-            LEFT JOIN estadia e ON estacionamiento.id_estacionamiento = e.idEstacionamiento
-          
-              AND NOT EXISTS (
-                  SELECT 1
-                  FROM estadia e2
-                  WHERE e.idEstacionamiento = e2.idEstacionamiento
-                    AND (
-                        (e2.fechaInicio <= :end_date AND (e2.fechaFin >= :start_date OR e2.fechaFin IS NULL)) OR
-                        (e2.fechaInicio <= :start_date AND (e2.fechaFin >= :start_date OR e2.fechaFin IS NULL)) OR
-                        (e2.fechaInicio >= :start_date AND e2.fechaFin <= :end_date)
-                    )
-              )
-              AND (e.fechaInicio IS NULL OR e.fechaFin IS NULL OR (e.fechaInicio > :end_date OR e.fechaFin < :start_date))
+        SELECT DISTINCT estacionamiento.*
+        FROM estacionamiento 
+        LEFT JOIN estadia e ON estacionamiento.id_estacionamiento = e.idEstacionamiento
+        WHERE e.idEstacionamiento IS NULL
+           OR NOT EXISTS (
+              SELECT 1
+              FROM estadia e2
+              WHERE e.idEstacionamiento = e2.idEstacionamiento
+                AND (
+                    (e2.fechaInicio <= :end_date AND (e2.fechaFin >= :start_date OR e2.fechaFin IS NULL)) OR
+                    (e2.fechaInicio <= :start_date AND (e2.fechaFin >= :start_date OR e2.fechaFin IS NULL)) OR
+                    (e2.fechaInicio >= :start_date AND e2.fechaInicio <= :end_date)
+                )
+           )
+           AND (e.fechaInicio IS NULL OR e.fechaFin IS NULL OR (e.fechaInicio > :end_date OR e.fechaFin < :start_date))
+         
         ");
         $query->execute([
            
